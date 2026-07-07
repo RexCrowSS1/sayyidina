@@ -30,18 +30,27 @@ export const projects = [
     name: 'Discord Bot',
     description:
       'This is a Discord bot that provides various utilities and entertainment features for server members.',
-    stack: ['Python', 'Discord.py'],
+    stack: ['Python', 'Discord.py', 'Bot Development', 'AI', 'Music Bot', 'Moderation'],
     github: 'https://github.com/RexCrowSS1/Eclps-Assistance.git',
     demo: 'https://discord.com/oauth2/authorize?client_id=1510611125987704953',
     status: 'Project slot',
   },
   {
-    name: 'Coming Soon',
+    name: 'Foto Kita Blur trend',
     description:
-      'A reserved space for future creative development work. No fake demo or GitHub link is shown until the data exists.',
-    stack: ['Frontend', 'Prototype', 'Digital Product'],
-    github: '',
+      'This is an application supported for Macos that allows users to apply a blur effect to their camera. It is designed to be a fun and creative tool for users to experiment with their camera',
+    stack: ['OS', 'Prototype', 'Digital Product', 'Python', 'OpenCV', 'Computer Vision'],
+    github: 'https://github.com/RexCrowSS1/foto-kita-blur-mac',
     demo: '',
     status: 'Next build',
+  },
+  {
+    name: 'Coming Soon',
+    description:
+      'Another compact slot for future portfolio work, ready for a real project summary when the details are available.',
+    stack: ['Case Study', 'GitHub', 'Demo'],
+    github: '',
+    demo: '',
+    status: 'Reserved',
   },
 ];
