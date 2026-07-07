@@ -13,7 +13,7 @@ export const projects = [
     description:
       'This project is a web application that helps musicians finds the right chords for their songs. It uses AI to analyze the song and suggest chords that fit well with the melody.',
     stack: ['Music Theory', 'AI', 'Chromagram', 'Python'],
-    github: '',
+    github: 'https://github.com/RexCrowSS1/AIUlik',
     demo: '',
     status: 'Project slot',
   },
