@@ -121,7 +121,11 @@ export default function App() {
       <div ref={scrollContainerRef} className="app-scroll-shell">
         <InteractiveBackground />
         <main id="content" className="site-content relative z-10">
-          <Hero onContact={() => scrollTo('contact')} onProjects={() => scrollTo('projects')} />
+          <Hero
+            scrollContainerRef={scrollContainerRef}
+            onContact={() => scrollTo('contact')}
+            onProjects={() => scrollTo('projects')}
+          />
           <About />
           <Projects />
           <Skills />

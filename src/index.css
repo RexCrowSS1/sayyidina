@@ -29,7 +29,7 @@
   --overscroll-top: #f3ead5;
   --overscroll-bottom: #111111;
   --overscroll-canvas: var(--overscroll-top);
-  --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.94) 0%, rgba(247, 237, 211, 0.76) 42%, rgba(8, 20, 31, 0.5) 100%), url("./assets/anime-cyber-campus.jpg");
+  --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.88) 0%, rgba(247, 237, 211, 0.58) 42%, rgba(8, 20, 31, 0.2) 100%), url("./assets/anime-cyber-campus-clean.jpg");
 }
 
 @layer base {
@@ -112,8 +112,8 @@ body,
   background:
     linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
     linear-gradient(180deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 14% 12%, rgba(18, 191, 205, 0.26), transparent 24rem),
-    radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.18), transparent 22rem),
+    radial-gradient(circle at 14% 12%, rgba(18, 191, 205, 0.16), transparent 24rem),
+    radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.1), transparent 22rem),
     var(--paper);
   background-size: 38px 38px, 38px 38px, auto, auto, auto;
   isolation: isolate;
@@ -134,8 +134,8 @@ body,
   background:
     linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
     linear-gradient(180deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 14% 12%, rgba(18, 191, 205, 0.26), transparent 24rem),
-    radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.18), transparent 22rem),
+    radial-gradient(circle at 14% 12%, rgba(18, 191, 205, 0.16), transparent 24rem),
+    radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.1), transparent 22rem),
     var(--paper);
   background-size: 38px 38px, 38px 38px, auto, auto, auto;
 }
@@ -434,13 +434,70 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .hero-backdrop {
   position: absolute;
-  inset: -5% -3% -8%;
-  z-index: -3;
+  inset: -7% -6% -10%;
+  z-index: -5;
   background-position: center;
   background-size: cover;
-  filter: saturate(0.98) contrast(1.01);
+  filter: saturate(0.96) contrast(0.98);
   transform: translateZ(0);
   will-change: transform;
+}
+
+.hero-starfield {
+  position: absolute;
+  inset: -8% -4%;
+  z-index: -4;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(255, 248, 232, 0.72) 0 1px, transparent 1.5px) 78% 12% / 160px 120px,
+    radial-gradient(circle, rgba(18, 191, 205, 0.44) 0 1px, transparent 1.5px) 84% 28% / 220px 160px,
+    radial-gradient(circle, rgba(255, 211, 38, 0.36) 0 1px, transparent 1.5px) 68% 18% / 190px 150px;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.85) 100%);
+  opacity: 0.36;
+  animation: star-drift 32s linear infinite;
+  will-change: background-position, opacity;
+}
+
+.hero-cyber-lines {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, transparent 0 58%, rgba(18, 191, 205, 0.28) 61%, transparent 64%),
+    linear-gradient(98deg, transparent 0 72%, rgba(255, 91, 63, 0.28) 74%, transparent 77%),
+    linear-gradient(180deg, transparent 0 68%, rgba(255, 211, 38, 0.18) 70%, transparent 72%);
+  background-size: 120% 100%, 130% 100%, 100% 120%;
+  filter: blur(0.4px);
+  opacity: 0.42;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 46%, rgba(0, 0, 0, 0.75) 100%);
+  animation: cyber-line-drift 14s ease-in-out infinite alternate;
+  will-change: background-position, opacity;
+}
+
+.hero-ambient {
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -4;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 68% 20%, rgba(18, 191, 205, 0.2), transparent 25%),
+    radial-gradient(circle at 88% 70%, rgba(255, 91, 63, 0.16), transparent 24%),
+    radial-gradient(circle at 38% 52%, rgba(255, 211, 38, 0.08), transparent 30%);
+  filter: blur(42px);
+  mix-blend-mode: soft-light;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
+.hero-softwash {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(243, 234, 213, 0.34) 0%, rgba(243, 234, 213, 0.16) 46%, rgba(243, 234, 213, 0.02) 100%),
+    linear-gradient(180deg, rgba(243, 234, 213, 0) 0%, rgba(243, 234, 213, 0.24) 82%, var(--paper) 100%);
 }
 
 .hero-halftone {
@@ -449,10 +506,38 @@ html.is-at-bottom .app-scroll-shell::after {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(circle, rgba(17, 17, 17, 0.1) 1px, transparent 1px) 0 0 / 20px 20px,
-    linear-gradient(180deg, rgba(243, 234, 213, 0.04) 0%, rgba(243, 234, 213, 0.42) 78%, var(--paper) 100%);
+    radial-gradient(circle, rgba(17, 17, 17, 0.035) 1px, transparent 1px) 0 0 / 30px 30px,
+    linear-gradient(180deg, rgba(243, 234, 213, 0.01) 0%, rgba(243, 234, 213, 0.18) 84%, var(--paper) 100%);
   mix-blend-mode: multiply;
-  opacity: 0.42;
+  opacity: 0.22;
+}
+
+@keyframes star-drift {
+  0% {
+    background-position: 78% 12%, 84% 28%, 68% 18%;
+    opacity: 0.28;
+  }
+
+  50% {
+    opacity: 0.42;
+  }
+
+  100% {
+    background-position: 82% 9%, 80% 33%, 72% 14%;
+    opacity: 0.28;
+  }
+}
+
+@keyframes cyber-line-drift {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+    opacity: 0.32;
+  }
+
+  100% {
+    background-position: 8% 0, -7% 0, 0 8%;
+    opacity: 0.5;
+  }
 }
 
 .hero-grid {
@@ -1122,6 +1207,16 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 @media (max-width: 620px) {
+  .hero-starfield,
+  .hero-cyber-lines {
+    opacity: 0.22;
+  }
+
+  .hero-ambient {
+    opacity: 0.42;
+    filter: blur(24px);
+  }
+
   .interactive-background {
     opacity: 0.44;
   }
