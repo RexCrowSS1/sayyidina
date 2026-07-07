@@ -10,7 +10,7 @@ export default function Hero({ onContact, onProjects }) {
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 130]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 58]);
   const profileY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const profileRotate = useTransform(scrollYProgress, [0, 1], [0, -4]);
 

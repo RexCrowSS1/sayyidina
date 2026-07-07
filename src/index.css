@@ -150,11 +150,12 @@ body,
 .app-scroll-shell::before {
   inset: -125vh -4% auto -4%;
   z-index: 0;
-  height: 230vh;
+  height: 125vh;
   background-image: var(--hero-canvas-image);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
+  filter: saturate(0.96) contrast(1.01);
 }
 
 .app-scroll-shell::after {
@@ -421,31 +422,24 @@ html.is-at-bottom .app-scroll-shell::after {
   display: flex;
   align-items: center;
   padding: clamp(7.5rem, 13vw, 10rem) 0 clamp(4rem, 8vw, 7rem);
-  overflow: visible;
+  overflow: clip;
+  overflow-clip-margin: 28px;
   isolation: isolate;
   perspective: 1000px;
 }
 
 .hero-section::before {
-  content: "";
-  position: absolute;
-  inset: -120vh -4% auto -4%;
-  z-index: -4;
-  height: 124vh;
-  pointer-events: none;
-  background-image: var(--hero-canvas-image);
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
+  content: none;
 }
 
 .hero-backdrop {
   position: absolute;
-  inset: -8% -4% -12%;
+  inset: -5% -3% -8%;
   z-index: -3;
   background-position: center;
   background-size: cover;
-  filter: saturate(0.95) contrast(1.02);
+  filter: saturate(0.98) contrast(1.01);
+  transform: translateZ(0);
   will-change: transform;
 }
 
@@ -455,10 +449,10 @@ html.is-at-bottom .app-scroll-shell::after {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(circle, rgba(17, 17, 17, 0.17) 1px, transparent 1px) 0 0 / 18px 18px,
-    linear-gradient(180deg, transparent 66%, var(--paper) 100%);
+    radial-gradient(circle, rgba(17, 17, 17, 0.1) 1px, transparent 1px) 0 0 / 20px 20px,
+    linear-gradient(180deg, rgba(243, 234, 213, 0.04) 0%, rgba(243, 234, 213, 0.42) 78%, var(--paper) 100%);
   mix-blend-mode: multiply;
-  opacity: 0.55;
+  opacity: 0.42;
 }
 
 .hero-grid {
