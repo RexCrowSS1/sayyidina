@@ -9,6 +9,33 @@ export const projects = [
     status: 'Project slot',
   },
   {
+    name: 'AIUlik',
+    description:
+      'This project is a web application that helps musicians finds the right chords for their songs. It uses AI to analyze the song and suggest chords that fit well with the melody.',
+    stack: ['Music Theory', 'AI', 'Chromagram', 'Python'],
+    github: '',
+    demo: '',
+    status: 'Project slot',
+  },
+  {
+    name: 'Archive',
+    description:
+      'This is a website that serves as a personal archive for my projects, notes, and other work. It is designed to be a simple and easy-to-use platform for storing and organizing my work.',
+    stack: ['Python', 'DL', 'ML', 'DM', 'C++', 'AI', 'Web Dev', 'Frontend', 'Backend'],
+    github: 'https://github.com/RexCrowSS1/archive-x',
+    demo: 'https://arxhive-x.vercel.app/',
+    status: 'Project slot',
+  },
+  {
+    name: 'Discord Bot',
+    description:
+      'This is a Discord bot that provides various utilities and entertainment features for server members.',
+    stack: ['Python', 'Discord.py'],
+    github: 'https://github.com/RexCrowSS1/Eclps-Assistance.git',
+    demo: 'https://discord.com/oauth2/authorize?client_id=1510611125987704953',
+    status: 'Project slot',
+  },
+  {
     name: 'Coming Soon',
     description:
       'A reserved space for future creative development work. No fake demo or GitHub link is shown until the data exists.',
