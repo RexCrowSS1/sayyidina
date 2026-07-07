@@ -6,13 +6,13 @@ export const contactLinks = [
   },
   {
     label: 'GitHub',
-    value: 'https://github.com/RexCrowSS1',
+    value: 'RexCrowSS1',
     href: 'https://github.com/RexCrowSS1',
   },
   {
     label: 'LinkedIn',
-    value: 'https://linkedin.com/in/sayyidinaanshari',
-    href: 'https://linkedin.com/in/sayyidinaanshari',
+    value: 'Sayyidina Anshari Ahmad',
+    href: 'https://www.linkedin.com/in/sayyidina-anshari-ahmad-17b8a5414/',
   },
   {
     label: 'Discord',
