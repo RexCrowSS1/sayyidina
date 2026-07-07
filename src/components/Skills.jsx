@@ -102,50 +102,24 @@ function SkillCard({ skill }) {
       whileHover={{ y: -6, scale: 1.02 }}
       className={`${isWide ? 'col-span-2' : 'col-span-1'}`}
     >
-      <div className="glass-card h-full p-6 group relative overflow-hidden" data-cursor-hover>
-        {/* Background glow on hover */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 rounded-3xl"
-          style={{ background: `radial-gradient(circle at center, ${skill.color}, transparent 70%)` }}
-        />
-
+      <div className="brutal-card h-full p-6 group relative overflow-hidden" data-cursor-hover>
         <div className="relative z-10 flex items-start gap-4">
-          {/* Icon circle with draw animation */}
           <div className="relative flex-shrink-0">
-            <svg className="w-12 h-12" viewBox="0 0 48 48">
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                fill="none"
-                stroke={skill.color}
-                strokeWidth="1.5"
-                strokeDasharray="126"
-                strokeDashoffset="126"
-                className="group-hover:animate-[draw-line_1.8s_ease_forwards]"
-                style={{ opacity: 0.3 }}
-              />
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                fill={`${skill.color}15`}
-                className="elastic-all group-hover:fill-[${skill.color}25]"
-              />
-            </svg>
-            <span
-              className="absolute inset-0 flex items-center justify-center text-lg font-bold"
-              style={{ color: skill.color }}
-            >
-              {skill.icon}
-            </span>
+            <div className="w-12 h-12 border-2 border-text flex items-center justify-center">
+              <span
+                className="text-lg font-bold"
+                style={{ color: skill.color }}
+              >
+                {skill.icon}
+              </span>
+            </div>
           </div>
 
           <div>
-            <h4 className="text-base font-bold text-charcoal mb-1 group-hover:text-violet elastic-all">
+            <h4 className="text-base font-bold text-text mb-1 group-hover:text-accent elastic-all">
               {skill.name}
             </h4>
-            <p className="text-xs text-charcoal/45 leading-relaxed">
+            <p className="text-xs text-muted leading-relaxed">
               {skill.description}
             </p>
           </div>
@@ -158,10 +132,6 @@ function SkillCard({ skill }) {
 export default function Skills() {
   return (
     <section id="skills" className="relative py-32 px-6 overflow-hidden">
-      {/* Background accents */}
-      <div className="absolute top-1/2 left-0 w-[35rem] h-[35rem] bg-indigo/5 rounded-full blur-[150px] -z-10 -translate-y-1/2 -translate-x-1/3" />
-      <div className="absolute bottom-0 right-0 w-[30rem] h-[30rem] bg-rose/5 rounded-full blur-[120px] -z-10 translate-x-1/3" />
-
       <div className="container mx-auto max-w-6xl">
         {/* Section label */}
         <motion.div
@@ -171,7 +141,7 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="mb-4"
         >
-          <span className="text-sm font-medium tracking-[0.2em] uppercase text-violet">
+          <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted">
             03 — Skills
           </span>
         </motion.div>
@@ -181,10 +151,10 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-charcoal tracking-tight mb-6 leading-[1.1]"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.05] brutal-title"
         >
           My technical<br />
-          <span className="text-gradient-violet">toolkit.</span>
+          <span className="text-text">toolkit.</span>
         </motion.h2>
 
         <motion.p
@@ -192,7 +162,7 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-charcoal/50 text-lg mb-16 max-w-xl"
+          className="text-muted text-lg mb-16 max-w-xl"
         >
           Technologies I've been working with recently:
         </motion.p>

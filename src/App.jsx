@@ -28,56 +28,33 @@ function HeroSection() {
   const magneticCTA = useMagnetic(0.3);
 
   return (
-    <section
-      id="hero"
-      className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden"
-    >
-      {/* Layered background orbs */}
-      <div className="absolute top-[15%] -left-[10%] w-[45rem] h-[45rem] bg-violet/8 rounded-full blur-[150px] animate-float-slow -z-10" />
-      <div className="absolute bottom-[10%] -right-[10%] w-[35rem] h-[35rem] bg-indigo/6 rounded-full blur-[120px] animate-float -z-10" style={{ animationDelay: '2s' }} />
-      <div className="absolute top-[40%] left-[60%] w-[20rem] h-[20rem] bg-rose/5 rounded-full blur-[80px] animate-float-slow -z-10" style={{ animationDelay: '1s' }} />
+    <section id="hero" className="min-h-screen relative overflow-hidden px-6 py-12 flex items-center">
+      <div className="hero-background">
+        <div className="hero-grid-lines" />
+        <div className="hero-block large" style={{ '--rotate': '-8deg' }} />
+        <div className="hero-block medium" style={{ '--rotate': '12deg' }} />
+        <div className="hero-block small" style={{ '--rotate': '-14deg' }} />
+      </div>
 
-      {/* Floating geometric dots */}
-      {[
-        { top: '20%', right: '15%', size: 'w-3 h-3', color: 'bg-violet/40', anim: 'animate-float' },
-        { top: '30%', left: '10%', size: 'w-2 h-2', color: 'bg-indigo/30', anim: 'animate-float-slow' },
-        { bottom: '25%', right: '25%', size: 'w-4 h-4', color: 'bg-rose/20', anim: 'animate-float' },
-        { top: '60%', left: '20%', size: 'w-1.5 h-1.5', color: 'bg-emerald/30', anim: 'animate-float-slow' },
-      ].map((dot, i) => (
-        <div
-          key={i}
-          className={`absolute ${dot.size} rounded-full ${dot.color} ${dot.anim} -z-10`}
-          style={{ top: dot.top, left: dot.left, right: dot.right, bottom: dot.bottom, animationDelay: `${i * 0.7}s` }}
-        />
-      ))}
-
-      {/* Main content */}
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="max-w-4xl">
-          {/* Status badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.94 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-card !rounded-full text-sm mb-10 text-charcoal/70"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="brutal-label mb-10"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald animate-pulse shadow-lg shadow-emerald/50" />
             Available for new opportunities
           </motion.div>
 
-          {/* Letter-by-letter name reveal */}
-          <h1 className="text-5xl md:text-7xl lg:text-[7rem] font-bold tracking-tight text-charcoal mb-4 leading-[0.95]">
+          <h1 className="text-5xl md:text-7xl lg:text-[7rem] font-bold tracking-tight text-text mb-4 leading-[0.9] brutal-title uppercase">
             <span className="overflow-hidden flex flex-wrap">
               {nameChars.map(({ char, index }) => (
                 <motion.span
                   key={index}
-                  initial={{ opacity: 0, y: 100, rotateX: -90 }}
+                  initial={{ opacity: 0, y: 120, rotateX: -90 }}
                   animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.4 + index * 0.06,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+                  transition={{ duration: 0.7, delay: 0.3 + index * 0.05, ease: [0.25, 1, 0.36, 1] }}
                   className="split-char"
                   style={{ perspective: '600px' }}
                 >
@@ -87,32 +64,26 @@ function HeroSection() {
             </span>
           </h1>
 
-          {/* Subtitle with gradient */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1]">
-              <span className="text-charcoal/50">Building </span>
-              <span className="text-gradient-violet animate-shimmer" style={{ backgroundSize: '200% auto' }}>
-                digital experiences
-              </span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-8 leading-[1.05] text-strong uppercase">
+              Building bold digital products for modern brands.
             </h2>
           </motion.div>
 
-          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.3, ease: [0.22, 1, 0.36, 1] }}
-            className="text-lg md:text-xl text-charcoal/50 mb-12 max-w-2xl leading-relaxed"
+            className="text-base md:text-lg text-muted mb-12 max-w-2xl leading-relaxed"
           >
-            I'm a frontend developer specializing in building exceptional digital
-            products. Currently focused on creating accessible, human-centered experiences.
+            I turn ambitious ideas into brutalist interfaces with strong structure,
+            tactile motion, and a crisp, no-fluff visual system.
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -127,23 +98,20 @@ function HeroSection() {
               whileTap={{ scale: 0.95 }}
               href="#projects"
               data-magnetic
-              className="inline-flex items-center gap-2.5 px-8 py-4 bg-charcoal text-cream rounded-full font-semibold shadow-xl shadow-charcoal/15 hover:shadow-2xl hover:shadow-charcoal/25 elastic-all"
+              className="brutal-button"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               View My Work
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 7h10v10" /><path d="M7 17 17 7" />
-              </svg>
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="#contact"
               data-magnetic
-              className="inline-flex items-center gap-2.5 px-8 py-4 glass-card !rounded-full font-semibold text-charcoal hover:bg-white/70 elastic-all"
+              className="brutal-button secondary"
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -155,22 +123,21 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-xs tracking-[0.3em] uppercase text-charcoal/30 font-medium">
+        <span className="text-xs tracking-[0.3em] uppercase text-muted font-medium">
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-9 rounded-full border-2 border-charcoal/20 flex justify-center pt-2"
+          className="w-5 h-9 border-2 border-text flex justify-center pt-2"
         >
-          <div className="w-1 h-2.5 rounded-full bg-charcoal/30" />
+          <div className="w-1 h-2.5 bg-text" />
         </motion.div>
       </motion.div>
     </section>

@@ -2,9 +2,8 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
 /**
- * Projects — Horizontal scrolling gallery with hover-to-reveal
- * floating image preview that follows cursor with inertia.
- * Glassmorphism cards with glowing borders.
+ * Projects — Horizontal gallery with 3D tilt cards,
+ * pixel hover preview, and brutalist panel styling.
  */
 
 const projects = [
@@ -79,21 +78,17 @@ function ProjectCard({ project, index }) {
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { x.set(0); y.set(0); }}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="glass-card h-full p-7 flex flex-col group relative overflow-hidden"
+        className="brutal-card h-full p-7 flex flex-col group relative overflow-hidden"
         data-cursor-hover
       >
-        {/* Top accent line */}
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `linear-gradient(90deg, transparent, ${project.color}, transparent)` }}
-        />
+        <div className="absolute top-0 left-0 right-0 h-[6px] bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Header row */}
         <div
           style={{ transform: 'translateZ(30px)' }}
           className="flex justify-between items-start mb-6"
         >
-          <span className="text-sm font-medium text-charcoal/40 font-[var(--font-display)]">
+          <span className="text-sm font-medium text-muted font-[var(--font-display)]">
             {project.year}
           </span>
           <div className="flex gap-3">
@@ -103,7 +98,7 @@ function ProjectCard({ project, index }) {
               target="_blank"
               rel="noopener noreferrer"
               data-magnetic
-              className="text-charcoal/40 hover:text-violet elastic-all"
+              className="text-muted hover:text-accent elastic-all"
             >
               <GithubIcon />
             </motion.a>
@@ -113,7 +108,7 @@ function ProjectCard({ project, index }) {
               target="_blank"
               rel="noopener noreferrer"
               data-magnetic
-              className="text-charcoal/40 hover:text-violet elastic-all"
+              className="text-muted hover:text-accent elastic-all"
             >
               <ArrowIcon />
             </motion.a>
@@ -123,7 +118,7 @@ function ProjectCard({ project, index }) {
         {/* Title */}
         <h3
           style={{ transform: 'translateZ(25px)' }}
-          className="text-xl font-bold text-charcoal mb-3 group-hover:text-violet elastic-all"
+          className="text-xl font-bold text-text mb-3 group-hover:text-accent elastic-all"
         >
           {project.title}
         </h3>
@@ -131,7 +126,7 @@ function ProjectCard({ project, index }) {
         {/* Description */}
         <p
           style={{ transform: 'translateZ(15px)' }}
-          className="text-charcoal/55 text-sm mb-8 flex-grow leading-relaxed"
+          className="text-muted text-sm mb-8 flex-grow leading-relaxed"
         >
           {project.description}
         </p>
@@ -144,7 +139,7 @@ function ProjectCard({ project, index }) {
           {project.tech.map((tech, i) => (
             <li
               key={i}
-              className="px-3 py-1.5 rounded-full bg-charcoal/5 text-charcoal/60 border border-charcoal/8 elastic-all hover:border-violet/30 hover:text-violet"
+              className="px-3 py-1.5 border border-text text-text elastic-all hover:border-accent hover:text-accent"
             >
               {tech}
             </li>
@@ -205,19 +200,19 @@ function ProjectListItem({ project, index, onHover, onLeave }) {
       transition={{ duration: 0.6, delay: index * 0.1 }}
       onMouseEnter={() => onHover(index)}
       onMouseLeave={onLeave}
-      className="group border-b border-charcoal/8 py-6 flex items-center justify-between elastic-all hover:pl-4"
+      className="group border-b border-surface/10 py-6 flex items-center justify-between elastic-all hover:pl-4"
       data-cursor-hover
     >
       <div className="flex items-center gap-6">
-        <span className="text-sm font-mono text-charcoal/30 w-8">
+        <span className="text-sm font-mono text-muted w-8">
           0{index + 1}
         </span>
-        <h4 className="text-xl md:text-2xl font-bold text-charcoal group-hover:text-violet elastic-all">
+        <h4 className="text-xl md:text-2xl font-bold text-text group-hover:text-accent elastic-all">
           {project.title}
         </h4>
       </div>
       <motion.div
-        className="text-charcoal/30 group-hover:text-violet elastic-all"
+        className="text-muted group-hover:text-accent elastic-all"
         whileHover={{ rotate: 45 }}
       >
         <ArrowIcon size={20} />
@@ -231,15 +226,14 @@ export default function Projects() {
 
   // Generate gradient previews for projects (since we don't have real images)
   const projectGradients = [
-    'linear-gradient(135deg, #8b5cf6, #6366f1)',
-    'linear-gradient(135deg, #6366f1, #3b82f6)',
-    'linear-gradient(135deg, #f43f5e, #f59e0b)',
+    '#111111',
+    '#333333',
+    '#111111',
   ];
 
   return (
     <section id="projects" className="relative py-32 px-6 overflow-hidden">
-      {/* Floating accent orbs */}
-      <div className="absolute top-1/4 left-0 w-[35rem] h-[35rem] bg-violet/5 rounded-full blur-[150px] -z-10" />
+      <div className="absolute top-1/4 left-0 w-[35rem] h-[35rem] -z-10" style={{ backgroundColor: 'rgba(17, 17, 17, 0.05)', border: '4px solid rgba(17, 17, 17, 0.1)' }} />
 
       <div className="container mx-auto max-w-6xl">
         {/* Section label */}
@@ -250,7 +244,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-4"
         >
-          <span className="text-sm font-medium tracking-[0.2em] uppercase text-violet">
+          <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted">
             02 — Projects
           </span>
         </motion.div>
@@ -260,10 +254,10 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-charcoal tracking-tight mb-16 leading-[1.1]"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold text-text tracking-tight mb-16 leading-[1.1] brutal-title"
         >
           Some things<br />
-          <span className="text-gradient-violet">I've built.</span>
+          <span className="text-accent">I've built.</span>
         </motion.h2>
 
         {/* Cards grid */}
@@ -279,11 +273,10 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-medium tracking-[0.2em] uppercase text-charcoal/40 mb-8"
+            className="text-sm font-medium tracking-[0.2em] uppercase text-muted mb-8"
           >
             All projects
           </motion.h3>
-
           {projects.map((project, index) => (
             <ProjectListItem
               key={index}
@@ -300,7 +293,7 @@ export default function Projects() {
             className={`hover-preview ${activeProject !== null ? 'is-visible' : ''}`}
           >
             <div
-              className="w-full h-full flex items-center justify-center text-white font-bold text-xl"
+              className="w-full h-full flex items-center justify-center text-text font-bold text-xl"
               style={{
                 background: activeProject !== null ? projectGradients[activeProject] : projectGradients[0],
               }}

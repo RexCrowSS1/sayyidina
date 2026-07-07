@@ -38,7 +38,7 @@ function NavItem({ item, isActive, onClick }) {
       data-magnetic
       className={`px-5 py-2 rounded-full text-sm font-medium relative elastic-all ${isActive
         ? 'text-white'
-        : 'text-charcoal/60 hover:text-charcoal'
+        : 'text-muted hover:text-text'
         }`}
     >
       {isActive && (
@@ -66,7 +66,7 @@ export default function Navbar({ activeSection }) {
       transition={{ type: 'spring', damping: 22, stiffness: 100, delay: 0.5 }}
       className="fixed top-6 left-1/2 -translate-x-1/2 z-[9990] w-[90%] max-w-3xl"
     >
-      <div className="glass-card rounded-full !border-white/30 py-2">
+      <div className="brutal-card py-2">
         <div className="px-5 flex justify-between items-center">
           {/* Logo */}
           <motion.a
@@ -75,9 +75,9 @@ export default function Navbar({ activeSection }) {
             whileTap={{ scale: 0.95 }}
             data-magnetic
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="text-xl font-bold tracking-tighter text-charcoal font-[var(--font-display)]"
+            className="text-xl font-bold tracking-tighter text-text font-[var(--font-display)]"
           >
-            Sayyidina<span className="text-gradient-violet">.</span>
+            Sayyidina<span className="text-accent">.</span>
           </motion.a>
 
           {/* Nav items */}
@@ -101,7 +101,7 @@ export default function Navbar({ activeSection }) {
               target="_blank"
               rel="noreferrer"
               data-magnetic
-              className="text-charcoal/50 hover:text-violet elastic-all"
+              className="text-muted hover:text-accent elastic-all"
             >
               <GithubIcon />
             </motion.a>
@@ -112,7 +112,7 @@ export default function Navbar({ activeSection }) {
               target="_blank"
               rel="noreferrer"
               data-magnetic
-              className="text-charcoal/50 hover:text-violet elastic-all"
+              className="text-muted hover:text-accent elastic-all"
             >
               <LinkedinIcon />
             </motion.a>

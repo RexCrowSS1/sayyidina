@@ -63,32 +63,16 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-32 px-6 overflow-hidden bg-[#0f0a1a] text-[#f5f0eb]"
+      className="relative py-32 px-6 overflow-hidden bg-dark text-surface"
     >
-      {/* Background orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-violet/10 rounded-full blur-[200px] -z-10" />
-      <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-indigo/8 rounded-full blur-[150px] -z-10 animate-float-slow" />
-      <div className="absolute top-0 right-0 w-[25rem] h-[25rem] bg-rose/5 rounded-full blur-[120px] -z-10" />
-
       <div className="container mx-auto max-w-4xl text-center relative z-10">
-        {/* Section label */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-6"
-        >
-          <span className="text-sm font-medium tracking-[0.2em] uppercase text-violet-light/70">
-            04 — Contact
-          </span>
-        </motion.div>
+        <div className="brutal-label mb-8 inline-block">04 — Contact</div>
 
         {/* Large dramatic heading */}
-        <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.05]">
+        <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.05] brutal-title text-text uppercase">
           <SplitHeading text="Let's create" />
           <br />
-          <span className="bg-gradient-to-r from-violet-light via-indigo to-rose bg-clip-text text-transparent animate-shimmer" style={{ backgroundSize: '200% auto' }}>
+          <span className="text-accent">
             <SplitHeading text="together." />
           </span>
         </h2>
@@ -99,7 +83,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 1, 0.5, 1] }}
-          className="text-[#f5f0eb]/50 mb-14 text-lg leading-relaxed max-w-xl mx-auto"
+          className="text-muted mb-14 text-lg leading-relaxed max-w-xl mx-auto"
         >
           Although I'm not currently looking for new opportunities, my inbox
           is always open. Whether you have a question or just want to say hi,
@@ -116,14 +100,14 @@ export default function Contact() {
         >
           <MagneticButton
             href="mailto:hello@example.com"
-            className="relative inline-flex items-center justify-center gap-3 px-10 py-4 rounded-full font-semibold text-[#f5f0eb] border-2 border-violet/40 hover:border-violet hover:bg-violet/10 elastic-all animate-pulse-glow"
+            className="brutal-button"
           >
             Say Hello <MailIcon />
           </MagneticButton>
         </motion.div>
 
         {/* Divider */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-10" />
+        <div className="w-full h-[1px] bg-text/20 mb-10" />
 
         {/* Footer */}
         <motion.footer
@@ -133,8 +117,8 @@ export default function Contact() {
           transition={{ duration: 0.7, delay: 0.8 }}
           className="flex flex-col items-center gap-6"
         >
-          <p className="text-[#f5f0eb]/30 text-sm">
-            Designed & Built by Sayyidina Anshari Ahmad
+          <p className="text-muted text-sm">
+            Designed & built by Sayyidina Anshari Ahmad
           </p>
           {/* SESUDAH DIUBAH */}
           <div className="flex gap-8 text-sm">
@@ -150,7 +134,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-magnetic
-                className="text-[#f5f0eb]/40 hover:text-violet-light elastic-all"
+                className="text-muted hover:text-text elastic-all"
               >
                 {social.name}
               </motion.a>
