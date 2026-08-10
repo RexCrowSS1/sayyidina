@@ -1,4 +1,4 @@
-export const projects = [
+export const experiences = [
   {
     name: 'Eclps Assistant',
     description:
@@ -6,7 +6,8 @@ export const projects = [
     stack: ['React', 'AI', 'Backend'],
     github: 'https://github.com/RexCrowSS1/AICompanion',
     demo: 'https://eclpsassist.vercel.app/',
-    status: 'Project slot',
+    category: 'academic',
+    status: 'AI Exploration',
   },
   {
     name: 'AIUlik',
@@ -15,7 +16,8 @@ export const projects = [
     stack: ['Music Theory', 'AI', 'Chromagram', 'Python'],
     github: 'https://github.com/RexCrowSS1/AIUlik',
     demo: '',
-    status: 'Project slot',
+    category: 'academic',
+    status: 'Applied AI',
   },
   {
     name: 'Archive',
@@ -24,7 +26,8 @@ export const projects = [
     stack: ['Python', 'DL', 'ML', 'DM', 'C++', 'AI', 'Web Dev', 'Frontend', 'Backend'],
     github: 'https://github.com/RexCrowSS1/archive-x',
     demo: 'https://arxhive-x.vercel.app/',
-    status: 'Project slot',
+    category: 'academic',
+    status: 'Learning Archive',
   },
   {
     name: 'Discord Bot',
@@ -33,7 +36,8 @@ export const projects = [
     stack: ['Python', 'Discord.py', 'Bot Development', 'AI', 'Music Bot', 'Moderation'],
     github: 'https://github.com/RexCrowSS1/Eclps-Assistance.git',
     demo: 'https://discord.com/oauth2/authorize?client_id=1510611125987704953',
-    status: 'Project slot',
+    category: 'non-academic',
+    status: 'Community Build',
   },
   {
     name: 'Foto Kita Blur trend',
@@ -42,15 +46,7 @@ export const projects = [
     stack: ['OS', 'Prototype', 'Digital Product', 'Python', 'OpenCV', 'Computer Vision'],
     github: 'https://github.com/RexCrowSS1/foto-kita-blur-mac',
     demo: '',
-    status: 'Next build',
-  },
-  {
-    name: 'Coming Soon',
-    description:
-      'Another compact slot for future portfolio work, ready for a real project summary when the details are available.',
-    stack: ['Case Study', 'GitHub', 'Demo'],
-    github: '',
-    demo: '',
-    status: 'Reserved',
+    category: 'non-academic',
+    status: 'Creative Experiment',
   },
 ];

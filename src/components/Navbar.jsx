@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 const items = [
   { label: 'Home', target: 'hero' },
   { label: 'About', target: 'about' },
-  { label: 'Projects', target: 'projects' },
+  { label: 'Experience', target: 'experience', modeAware: true },
   { label: 'Skills', target: 'skills' },
   { label: 'Journey', target: 'journey' },
   { label: 'Contact', target: 'contact' },
 ];
 
-export default function Navbar({ activeSection, onNavigate }) {
+export default function Navbar({ activeSection, onNavigate, studentMode }) {
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
@@ -17,7 +17,7 @@ export default function Navbar({ activeSection, onNavigate }) {
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       className="fixed left-0 right-0 top-4 z-50 px-3 md:px-6"
     >
-      <div className="container nav-shell">
+      <div className="portfolio-container nav-shell">
         <button
           onClick={() => onNavigate('hero')}
           className="brand-mark"
@@ -34,13 +34,25 @@ export default function Navbar({ activeSection, onNavigate }) {
               className={activeSection === item.target ? 'is-active' : ''}
               data-cursor
             >
-              {item.label}
+              {item.modeAware && studentMode ? 'Projects' : item.label}
             </button>
           ))}
         </nav>
-        <div className="nav-status" aria-label="Current focus">
-          CS / AI / Web
-        </div>
+        <motion.div
+          className={`nav-status${studentMode ? '' : ' is-non-academic'}`}
+          aria-label="Current focus"
+          animate={{ y: [0, -3, 0], rotate: studentMode ? 0 : -1 }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.span
+            key={studentMode ? 'student' : 'builder'}
+            initial={{ opacity: 0, y: 7 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.24 }}
+          >
+            {studentMode ? 'Student / CS / AI' : 'Builder / Creative / Music'}
+          </motion.span>
+        </motion.div>
       </div>
     </motion.header>
   );

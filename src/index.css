@@ -14,25 +14,25 @@
   --font-body: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 }
 
-:root {
-  --ink: #111111;
-  --paper: #f3ead5;
-  --cream: #fff8e8;
-  --card: #fffdf5;
-  --muted: #4f4b44;
-  --signal: #ffd326;
-  --coral: #ff5b3f;
-  --cyan: #12bfcd;
-  --violet: #6d5dfc;
-  --shadow: #111111;
-  --shadow-soft: rgba(17, 17, 17, 0.18);
-  --overscroll-top: #f3ead5;
-  --overscroll-bottom: #111111;
-  --overscroll-canvas: var(--overscroll-top);
-  --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.88) 0%, rgba(247, 237, 211, 0.58) 42%, rgba(8, 20, 31, 0.2) 100%), url("./assets/anime-cyber-campus-clean.jpg");
-}
-
 @layer base {
+  :root {
+    --ink: #111111;
+    --paper: #f3ead5;
+    --cream: #fff8e8;
+    --card: #fffdf5;
+    --muted: #4f4b44;
+    --signal: #ffd326;
+    --coral: #ff5b3f;
+    --cyan: #12bfcd;
+    --violet: #6d5dfc;
+    --shadow: #111111;
+    --shadow-soft: rgba(17, 17, 17, 0.18);
+    --overscroll-top: #f3ead5;
+    --overscroll-bottom: #111111;
+    --overscroll-canvas: var(--overscroll-top);
+    --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.88) 0%, rgba(247, 237, 211, 0.58) 42%, rgba(8, 20, 31, 0.2) 100%), url("./assets/anime-cyber-campus-clean.jpg");
+  }
+
   html {
     background-color: var(--overscroll-top);
     background-image: var(--hero-canvas-image);
@@ -83,32 +83,30 @@
     background-color: var(--overscroll-bottom);
     background-image: none;
   }
-}
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
+  @media (pointer: fine) {
+    body {
+      cursor: none;
+    }
+
+    a,
+    button,
+    [data-cursor] {
+      cursor: none;
+    }
   }
 
-  a,
-  button,
-  [data-cursor] {
-    cursor: none;
+  html,
+  body,
+  #root {
+    height: 100%;
+    min-height: 100%;
   }
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  min-height: 100%;
-}
-
+@layer components {
 .site-root {
-  position: relative;
-  height: 100vh;
-  min-height: 100vh;
-  overflow: hidden;
+  @apply relative h-screen min-h-screen overflow-hidden isolate;
   background:
     linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
     linear-gradient(180deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
@@ -116,18 +114,17 @@ body,
     radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.1), transparent 22rem),
     var(--paper);
   background-size: 38px 38px, 38px 38px, auto, auto, auto;
-  isolation: isolate;
+  filter: invert(0);
+}
+
+.site-root.is-inverted {
+  filter: invert(1);
 }
 
 .app-scroll-shell {
-  position: relative;
-  z-index: 1;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  @apply relative z-[1] h-screen overflow-x-hidden overflow-y-auto scroll-smooth;
   overscroll-behavior-x: none;
   overscroll-behavior-y: auto;
-  scroll-behavior: smooth;
   scroll-padding-top: 7.5rem;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
@@ -172,32 +169,21 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .site-content {
-  position: relative;
-  z-index: 2;
+  @apply relative z-[2];
 }
 
-.container {
+.portfolio-container {
+  @apply mx-auto;
   width: min(100% - clamp(1rem, 4vw, 3rem), 1180px);
-  margin-inline: auto;
 }
 
 .scroll-progress {
-  position: fixed;
+  @apply fixed z-[80] h-[6px] w-full origin-left border-b-[3px] border-ink bg-signal;
   inset: 0 auto auto 0;
-  z-index: 80;
-  width: 100%;
-  height: 6px;
-  transform-origin: left;
-  background: var(--signal);
-  border-bottom: 3px solid var(--ink);
 }
 
 .interactive-background {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
+  @apply pointer-events-none fixed inset-0 z-0 overflow-hidden;
   perspective: 900px;
   perspective-origin: center;
 }
@@ -230,20 +216,15 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .interactive-scene {
-  position: absolute;
+  @apply absolute transform-3d will-change-transform;
   inset: 4rem -8vw auto auto;
   width: min(62vw, 780px);
   height: min(72vh, 680px);
-  transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .interactive-plane {
-  position: absolute;
-  border: 3px solid rgba(17, 17, 17, 0.32);
-  border-radius: 8px;
+  @apply absolute transform-3d rounded-[8px] border-[3px] border-[rgba(17,17,17,0.32)];
   box-shadow: 14px 14px 0 rgba(17, 17, 17, 0.08);
-  transform-style: preserve-3d;
 }
 
 .interactive-plane-back {
@@ -267,12 +248,8 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .interactive-block {
-  position: absolute;
-  border: 3px solid rgba(17, 17, 17, 0.72);
-  border-radius: 8px;
+  @apply absolute transform-3d will-change-transform rounded-[8px] border-[3px] border-[rgba(17,17,17,0.72)];
   box-shadow: 12px 12px 0 rgba(17, 17, 17, 0.18);
-  transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .interactive-block::after {
@@ -334,28 +311,15 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .nav-shell {
-  display: grid;
+  @apply grid items-center gap-4 rounded-[8px] border-[3px] border-ink bg-card/92 px-[0.85rem] py-[0.7rem] backdrop-blur-[14px];
   grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 0.85rem;
-  border: 3px solid var(--ink);
-  border-radius: 8px;
-  background: rgba(255, 253, 245, 0.92);
   box-shadow: 8px 8px 0 var(--shadow);
-  backdrop-filter: blur(14px);
 }
 
 .brand-mark {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.6rem;
-  border: 0;
-  background: transparent;
-  font-family: var(--font-display);
+  @apply inline-flex min-h-[2.6rem] items-center border-0 bg-transparent font-display uppercase;
   font-size: clamp(1rem, 1.3vw, 1.2rem);
   line-height: 1;
-  text-transform: uppercase;
 }
 
 .brand-mark span {
@@ -363,11 +327,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .nav-links {
-  display: flex;
-  justify-content: center;
-  gap: 0.35rem;
-  min-width: 0;
-  overflow-x: auto;
+  @apply flex min-w-0 justify-center gap-[0.35rem] overflow-x-auto;
   scrollbar-width: none;
 }
 
@@ -400,32 +360,37 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .nav-status {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.45rem;
-  padding: 0.55rem 0.75rem;
-  border: 2px solid var(--ink);
-  border-radius: 6px;
-  background: var(--ink);
-  color: var(--cream);
+  @apply inline-flex min-h-[2.45rem] items-center justify-center whitespace-nowrap rounded-[6px] border-2 border-ink bg-ink px-3 py-[0.55rem] text-cream text-[0.72rem] font-[900] tracking-[0.08em] uppercase;
+  width: 10.75rem;
+  height: 2.45rem;
+  overflow: hidden;
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  white-space: nowrap;
+}
+
+.nav-status.is-non-academic {
+  background: var(--coral);
+  color: var(--cream);
+}
+
+.nav-status.is-non-academic span {
+  font-size: 0.52rem;
+  letter-spacing: 0.045em;
+}
+
+.nav-status span {
+  display: inline-block;
 }
 
 .hero-section {
-  position: relative;
+  @apply relative isolate flex min-h-svh items-center overflow-hidden;
   min-height: 100svh;
-  display: flex;
-  align-items: center;
   padding: clamp(7.5rem, 13vw, 10rem) 0 clamp(4rem, 8vw, 7rem);
-  overflow: clip;
-  overflow-clip-margin: 28px;
-  isolation: isolate;
+  overflow: hidden;
   perspective: 1000px;
+  background-color: var(--paper);
 }
 
 .hero-section::before {
@@ -433,21 +398,16 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .hero-backdrop {
-  position: absolute;
-  inset: -7% -6% -10%;
+  @apply absolute inset-0 z-[-5] bg-cover bg-center;
   z-index: -5;
-  background-position: center;
-  background-size: cover;
+  background-color: var(--paper);
   filter: saturate(0.96) contrast(0.98);
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 .hero-starfield {
-  position: absolute;
+  @apply pointer-events-none absolute z-[-4];
   inset: -8% -4%;
   z-index: -4;
-  pointer-events: none;
   background:
     radial-gradient(circle, rgba(255, 248, 232, 0.72) 0 1px, transparent 1.5px) 78% 12% / 160px 120px,
     radial-gradient(circle, rgba(18, 191, 205, 0.44) 0 1px, transparent 1.5px) 84% 28% / 220px 160px,
@@ -459,10 +419,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .hero-cyber-lines {
-  position: absolute;
-  inset: 0;
-  z-index: -4;
-  pointer-events: none;
+  @apply pointer-events-none absolute inset-0 z-[-4];
   background:
     linear-gradient(100deg, transparent 0 58%, rgba(18, 191, 205, 0.28) 61%, transparent 64%),
     linear-gradient(98deg, transparent 0 72%, rgba(255, 91, 63, 0.28) 74%, transparent 77%),
@@ -476,10 +433,9 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .hero-ambient {
-  position: absolute;
+  @apply pointer-events-none absolute z-[-4];
   inset: -18% -12%;
   z-index: -4;
-  pointer-events: none;
   background:
     radial-gradient(circle at 68% 20%, rgba(18, 191, 205, 0.2), transparent 25%),
     radial-gradient(circle at 88% 70%, rgba(255, 91, 63, 0.16), transparent 24%),
@@ -491,25 +447,19 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .hero-softwash {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
+  @apply pointer-events-none absolute inset-0 z-[-3];
   background:
     linear-gradient(90deg, rgba(243, 234, 213, 0.34) 0%, rgba(243, 234, 213, 0.16) 46%, rgba(243, 234, 213, 0.02) 100%),
     linear-gradient(180deg, rgba(243, 234, 213, 0) 0%, rgba(243, 234, 213, 0.24) 82%, var(--paper) 100%);
 }
 
 .hero-halftone {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
+  @apply pointer-events-none absolute inset-0 z-[-2] opacity-[0.22] mix-blend-multiply;
   background:
     radial-gradient(circle, rgba(17, 17, 17, 0.035) 1px, transparent 1px) 0 0 / 30px 30px,
     linear-gradient(180deg, rgba(243, 234, 213, 0.01) 0%, rgba(243, 234, 213, 0.18) 84%, var(--paper) 100%);
-  mix-blend-mode: multiply;
-  opacity: 0.22;
+}
+
 }
 
 @keyframes star-drift {
@@ -540,33 +490,30 @@ html.is-at-bottom .app-scroll-shell::after {
   }
 }
 
+@layer components {
 .hero-grid {
-  display: grid;
+  @apply grid items-center;
   grid-template-columns: minmax(0, 1.1fr) minmax(290px, 0.58fr);
-  align-items: center;
   gap: clamp(2rem, 5vw, 4.8rem);
 }
 
 .hero-copy {
-  display: grid;
+  @apply grid max-w-[820px];
   gap: clamp(1.35rem, 3vw, 2rem);
-  max-width: 820px;
+}
+
+.hero-mode-copy {
+  display: grid;
+  grid-template-rows: auto 5.35rem 8rem;
+  align-content: start;
+}
+
+.hero-mode-copy.is-student {
+  grid-template-rows: auto auto auto;
 }
 
 .sticker {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.6rem;
-  padding: 0.65rem 0.9rem;
-  border: 3px solid var(--ink);
-  border-radius: 6px;
-  color: var(--ink);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  @apply inline-flex min-h-[2.6rem] w-fit items-center justify-center rounded-[6px] border-[3px] border-ink px-[0.9rem] py-[0.65rem] text-[0.78rem] font-[900] tracking-[0.11em] text-ink uppercase;
   box-shadow: 6px 6px 0 var(--shadow);
 }
 
@@ -637,9 +584,7 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .hero-actions,
 .project-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
+  @apply flex flex-wrap gap-[0.85rem];
 }
 
 .btn-brutal,
@@ -681,9 +626,13 @@ html.is-at-bottom .app-scroll-shell::after {
 .hero-tags,
 .stack-list,
 .skill-badge-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
+  @apply flex flex-wrap gap-[0.65rem];
+}
+
+.hero-tags {
+  height: 5.35rem;
+  align-content: flex-start;
+  overflow: hidden;
 }
 
 .hero-tags span,
@@ -722,18 +671,13 @@ html.is-at-bottom .app-scroll-shell::after {
 .skill-panel,
 .timeline-card,
 .contact-card {
-  border: 3px solid var(--ink);
-  border-radius: 8px;
-  background: var(--card);
+  @apply rounded-[8px] border-[3px] border-ink bg-card;
   box-shadow: 14px 14px 0 var(--shadow);
 }
 
 .profile-block {
-  position: relative;
-  display: grid;
-  gap: 1rem;
+  @apply relative grid transform-3d gap-4;
   padding: clamp(0.9rem, 2vw, 1.2rem);
-  transform-style: preserve-3d;
 }
 
 .profile-block::before {
@@ -750,27 +694,15 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .profile-frame {
-  overflow: hidden;
-  border: 3px solid var(--ink);
-  border-radius: 6px;
-  background: var(--signal);
-  aspect-ratio: 4 / 5;
+  @apply aspect-[4/5] overflow-hidden rounded-[6px] border-[3px] border-ink bg-signal;
 }
 
 .profile-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+  @apply block size-full object-cover;
 }
 
 .profile-meta {
-  display: grid;
-  gap: 0.35rem;
-  padding: 0.85rem;
-  border: 3px solid var(--ink);
-  border-radius: 6px;
-  background: var(--signal);
+  @apply grid gap-[0.35rem] rounded-[6px] border-[3px] border-ink bg-signal p-[0.85rem];
 }
 
 .profile-meta span,
@@ -784,18 +716,70 @@ html.is-at-bottom .app-scroll-shell::after {
   text-transform: uppercase;
 }
 
-.profile-meta strong {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2vw, 1.65rem);
+.student-mode-toggle {
+  @apply inline-flex w-fit items-center gap-[0.65rem] rounded-[6px] border-[3px] border-ink bg-card px-[0.7rem] py-[0.6rem] text-left font-display font-[950] uppercase text-ink;
+  font-size: clamp(0.82rem, 1.4vw, 1rem);
   line-height: 1;
-  text-transform: uppercase;
+  box-shadow: 5px 5px 0 var(--shadow);
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.student-mode-toggle:hover {
+  box-shadow: 7px 7px 0 var(--shadow);
+}
+
+.student-mode-toggle.is-on {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.student-mode-label,
+.student-mode-state {
+  color: inherit;
+}
+
+.student-mode-state {
+  min-width: 2.1rem;
+  text-align: right;
+}
+
+.student-mode-switch {
+  position: relative;
+  width: 3.25rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  border: 3px solid currentColor;
+  border-radius: 999px;
+  background: var(--coral);
+  transition: background 180ms ease;
+}
+
+.student-mode-toggle.is-on .student-mode-switch {
+  background: var(--cyan);
+}
+
+.student-mode-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--cream);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.student-mode-toggle:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
 }
 
 .profile-note {
-  display: grid;
+  @apply grid items-start gap-[0.85rem];
   grid-template-columns: auto 1fr;
-  gap: 0.85rem;
-  align-items: start;
+  height: 4.95rem;
+  overflow: hidden;
 }
 
 .profile-note-index,
@@ -821,7 +805,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .section-shell {
-  position: relative;
+  @apply relative;
   padding: clamp(4.6rem, 8vw, 8rem) 0;
 }
 
@@ -839,20 +823,24 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .section-grid,
 .contact-layout {
-  display: grid;
+  @apply grid items-start;
   grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.78fr);
-  align-items: start;
   gap: clamp(1.5rem, 5vw, 4.2rem);
 }
 
 .section-intro,
 .section-heading {
+  @apply grid gap-4;
+}
+
+.about-paragraphs {
   display: grid;
+  align-content: start;
   gap: 1rem;
 }
 
 .section-heading {
-  max-width: 780px;
+  @apply max-w-[780px];
   margin-bottom: clamp(1.6rem, 4vw, 3rem);
 }
 
@@ -873,18 +861,12 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .about-card {
-  display: grid;
-  gap: 1.1rem;
+  @apply grid gap-[1.1rem] bg-signal;
   padding: clamp(1rem, 2.4vw, 1.5rem);
-  background: var(--signal);
 }
 
 .interest-list {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  @apply m-0 grid list-none gap-3 p-0;
 }
 
 .interest-list li {
@@ -903,12 +885,8 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .about-split {
-  display: grid;
+  @apply grid items-center gap-4 border-t-[3px] border-ink pt-4;
   grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 3px solid var(--ink);
 }
 
 .about-split span {
@@ -925,20 +903,51 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .project-grid {
-  display: grid;
+  @apply grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.8rem, 2vw, 1rem);
 }
 
-.project-card {
+.experience-groups {
   display: grid;
-  align-content: start;
-  gap: 0.72rem;
+  gap: clamp(3rem, 7vw, 5.5rem);
+}
+
+.experience-group {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.experience-group-heading {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 760px;
+  padding-left: 1rem;
+  border-left: 6px solid var(--coral);
+}
+
+.experience-group:nth-child(2n) .experience-group-heading {
+  border-left-color: var(--cyan);
+}
+
+.experience-group-heading h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.5vw, 2.8rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.experience-group-heading p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.project-card {
+  @apply grid min-h-full content-start gap-[0.72rem] transform-3d bg-card;
   padding: clamp(0.85rem, 1.8vw, 1.05rem);
-  min-height: 100%;
-  background: var(--card);
   box-shadow: 10px 10px 0 var(--shadow);
-  transform-style: preserve-3d;
 }
 
 .project-card:nth-child(2n) {
@@ -946,9 +955,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .project-topline {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
+  @apply flex justify-between gap-3;
 }
 
 .project-card h3,
@@ -1009,17 +1016,12 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .skills-grid {
-  display: grid;
+  @apply grid gap-4;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1rem;
 }
 
 .skill-panel {
-  display: grid;
-  align-content: start;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--card);
+  @apply grid content-start gap-4 bg-card p-4;
 }
 
 .skill-panel:nth-child(2n) {
@@ -1035,7 +1037,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .skill-badge-list {
-  display: grid;
+  @apply grid;
 }
 
 .skill-badge {
@@ -1044,10 +1046,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .timeline {
-  position: relative;
-  display: grid;
-  gap: 1.2rem;
-  max-width: 920px;
+  @apply relative grid max-w-[920px] gap-[1.2rem];
 }
 
 .timeline::before {
@@ -1060,14 +1059,10 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .timeline-card {
-  position: relative;
-  display: grid;
+  @apply relative grid items-start gap-4 bg-card;
   grid-template-columns: auto 1fr;
-  gap: 1rem;
-  align-items: start;
   margin-left: clamp(0rem, 5vw, 4rem);
   padding: clamp(1rem, 2vw, 1.3rem);
-  background: var(--card);
 }
 
 .timeline-card:nth-child(2n) {
@@ -1085,27 +1080,17 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .contact-layout {
   grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.7fr);
-  align-items: center;
+  @apply items-center;
 }
 
 .contact-card {
-  display: grid;
-  gap: 0.75rem;
+  @apply grid gap-3 bg-signal;
   padding: clamp(1rem, 2.4vw, 1.35rem);
-  background: var(--signal);
 }
 
 .contact-row {
-  display: grid;
-  gap: 0.35rem;
-  padding: 1rem;
-  border: 3px solid var(--ink);
-  border-radius: 6px;
-  background: var(--card);
-  color: var(--ink);
-  text-decoration: none;
+  @apply grid gap-[0.35rem] rounded-[6px] border-[3px] border-ink bg-card p-4 text-ink no-underline transition-[transform,background] duration-160 ease-[ease];
   box-shadow: 5px 5px 0 var(--shadow);
-  transition: transform 160ms ease, background 160ms ease;
 }
 
 .contact-row:hover {
@@ -1129,21 +1114,13 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .footer-bar {
-  position: relative;
-  z-index: 10;
-  border-top: 3px solid var(--ink);
-  background: var(--ink);
-  color: var(--cream);
+  @apply relative z-10 border-t-[3px] border-ink bg-ink py-5 text-cream;
   box-shadow: 0 100vmax 0 100vmax var(--ink);
   clip-path: inset(0 -100vmax -100vmax -100vmax);
-  padding: 1.25rem 0;
 }
 
 .footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  @apply flex items-center justify-between gap-4;
 }
 
 .footer-inner p {
@@ -1159,18 +1136,7 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 .custom-cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--cream);
-  border-radius: 6px;
-  background: rgba(255, 211, 38, 0.24);
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: difference;
+  @apply pointer-events-none fixed top-0 left-0 z-[9999] size-6 rounded-[6px] border-[3px] border-cream bg-signal/24 opacity-0 mix-blend-difference;
   transition:
     width 140ms ease,
     height 140ms ease,
@@ -1282,7 +1248,7 @@ html.is-at-bottom .app-scroll-shell::after {
     display: none;
   }
 
-  .container {
+  .portfolio-container {
     width: min(100% - 1rem, 1180px);
   }
 
@@ -1307,6 +1273,18 @@ html.is-at-bottom .app-scroll-shell::after {
 
   .hero-section {
     padding-top: 11rem;
+  }
+
+  .hero-mode-copy {
+    grid-template-rows: auto 7rem 13rem;
+  }
+
+  .hero-mode-copy.is-student {
+    grid-template-rows: auto auto auto;
+  }
+
+  .hero-tags {
+    height: 8rem;
   }
 
   .hero-headline {
@@ -1364,4 +1342,5 @@ html.is-at-bottom .app-scroll-shell::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
 }

@@ -4,7 +4,7 @@ import { skillCategories } from '../data/skills.js';
 export default function Skills() {
   return (
     <section id="skills" className="section-shell section-skills">
-      <div className="container">
+      <div className="portfolio-container">
         <div className="section-heading">
           <div className="sticker sticker-cyan">Skills</div>
           <h2>A toolkit for building, testing ideas, and learning faster.</h2>

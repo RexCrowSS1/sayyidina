@@ -4,7 +4,7 @@ import { contactLinks } from '../data/contact.js';
 export default function Contact() {
   return (
     <section id="contact" className="section-shell section-contact">
-      <div className="container">
+      <div className="portfolio-container">
         <div className="contact-layout">
           <motion.div
             initial={{ opacity: 0, y: 36 }}

@@ -3,7 +3,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
-import Projects from './components/Projects.jsx';
+import Experience from './components/Projects.jsx';
 import Skills from './components/Skills.jsx';
 import Journey from './components/Journey.jsx';
 import Contact from './components/Contact.jsx';
@@ -11,13 +11,14 @@ import Footer from './components/Footer.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
 import InteractiveBackground from './components/InteractiveBackground.jsx';
 
-const sections = ['hero', 'about', 'projects', 'skills', 'journey', 'contact'];
+const sections = ['hero', 'about', 'experience', 'skills', 'journey', 'contact'];
 const topCanvas = '#f3ead5';
 const bottomCanvas = '#111111';
 
 export default function App() {
   const scrollContainerRef = useRef(null);
   const [activeSection, setActiveSection] = useState('hero');
+  const [studentMode, setStudentMode] = useState(true);
   const { scrollYProgress } = useScroll({ container: scrollContainerRef });
   const scaleX = useSpring(scrollYProgress, { stiffness: 90, damping: 28 });
 
@@ -115,19 +116,27 @@ export default function App() {
   };
 
   return (
-    <div className="site-root relative overflow-x-hidden">
+    <div
+      className={`site-root relative overflow-x-hidden${studentMode ? '' : ' is-inverted'}`}
+    >
       <motion.div className="scroll-progress" style={{ scaleX }} />
-      <Navbar activeSection={activeSection} onNavigate={scrollTo} />
+      <Navbar
+        activeSection={activeSection}
+        onNavigate={scrollTo}
+        studentMode={studentMode}
+      />
       <div ref={scrollContainerRef} className="app-scroll-shell">
         <InteractiveBackground />
         <main id="content" className="site-content relative z-10">
           <Hero
             scrollContainerRef={scrollContainerRef}
             onContact={() => scrollTo('contact')}
-            onProjects={() => scrollTo('projects')}
+            onExperience={() => scrollTo('experience')}
+            studentMode={studentMode}
+            onToggleStudentMode={() => setStudentMode((isOn) => !isOn)}
           />
-          <About />
-          <Projects />
+          <About studentMode={studentMode} />
+          <Experience studentMode={studentMode} />
           <Skills />
           <Journey />
           <Contact />

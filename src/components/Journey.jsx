@@ -4,7 +4,7 @@ import { journeyItems } from '../data/journey.js';
 export default function Journey() {
   return (
     <section id="journey" className="section-shell section-journey">
-      <div className="container">
+      <div className="portfolio-container">
         <div className="section-heading">
           <div className="sticker sticker-signal">Learning Journey</div>
           <h2>Small steps, stronger systems.</h2>
