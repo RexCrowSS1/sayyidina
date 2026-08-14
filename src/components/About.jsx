@@ -18,19 +18,20 @@ const aboutContent = {
     cycle: 'learn / make / refine',
   },
   nonstud: {
-    title: 'Trying all the things, building mindset what matters.',
+    title: 'The work beyond the coursework.',
     paragraphs: [
-      'I joined couples of clubs and organizations to explore the intersection of different fields and create meaningful projects.',
+      'I take part in clubs, organizations, communities, and collaborative projects outside class.',
+      'That work has taught me how to listen, communicate clearly, take responsibility, and keep a team moving.',
     ],
-    label: 'Current development focus',
+    label: 'Core soft skills',
     interests: [
-      'Production robotics',
-      'Music and sound design',
-      'Responsive product experiences',
-      'Creative technical solutions',
+      'Communication and active listening',
+      'Team collaboration',
+      'Leadership and initiative',
+      'Adaptability and responsibility',
     ],
-    mindset: 'Social mindset',
-    cycle: 'plan / build / ship',
+    mindset: 'Growth mindset',
+    cycle: 'listen / act / improve',
   },
 };
 
@@ -38,11 +39,14 @@ export default function About({ studentMode }) {
   const content = studentMode ? aboutContent.student : aboutContent.nonstud;
 
   return (
-    <section id="about" className="section-shell section-about">
+    <section
+      id="about"
+      className={`section-shell section-about${studentMode ? '' : ' is-non-student'}`}
+    >
       <div className="portfolio-container">
         <div className="section-grid">
           <motion.div
-            initial={{ opacity: 0, y: 36, rotateX: 6 }}
+            initial={{ opacity: 0, y: 36, rotateX: studentMode ? 6 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -67,17 +71,22 @@ export default function About({ studentMode }) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 42, rotate: -2 }}
+            initial={{ opacity: 0, y: 42, rotate: studentMode ? -2 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ y: -6, rotate: 0 }}
+            whileHover={{ y: studentMode ? -6 : -3, rotate: 0 }}
             className="brutal-card about-card"
           >
             <div className="card-label">{content.label}</div>
             <ul className="interest-list">
-              {content.interests.map((interest) => (
-                <li key={interest}>{interest}</li>
+              {content.interests.map((interest, index) => (
+                <li key={interest}>
+                  <span className="interest-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{interest}</span>
+                </li>
               ))}
             </ul>
             <div className="about-split">

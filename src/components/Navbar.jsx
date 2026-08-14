@@ -4,8 +4,8 @@ const items = [
   { label: 'Home', target: 'hero' },
   { label: 'About', target: 'about' },
   { label: 'Experience', target: 'experience', modeAware: true },
-  { label: 'Skills', target: 'skills' },
-  { label: 'Journey', target: 'journey' },
+  { label: 'Skills', alternateLabel: 'Soft Skills', target: 'skills' },
+  { label: 'Journey', alternateLabel: 'Highlights', target: 'journey' },
   { label: 'Contact', target: 'contact' },
 ];
 
@@ -34,7 +34,9 @@ export default function Navbar({ activeSection, onNavigate, studentMode }) {
               className={activeSection === item.target ? 'is-active' : ''}
               data-cursor
             >
-              {item.modeAware && studentMode ? 'Projects' : item.label}
+              {item.modeAware && studentMode
+                ? 'Projects'
+                : (!studentMode && item.alternateLabel) || item.label}
             </button>
           ))}
         </nav>
@@ -50,7 +52,7 @@ export default function Navbar({ activeSection, onNavigate, studentMode }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.24 }}
           >
-            {studentMode ? 'Student / CS / AI' : 'Builder / Creative / Music'}
+            {studentMode ? 'Student / CS / AI' : 'People / Growth / Impact'}
           </motion.span>
         </motion.div>
       </div>

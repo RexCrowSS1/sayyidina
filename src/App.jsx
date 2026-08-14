@@ -12,8 +12,10 @@ import CustomCursor from './components/CustomCursor.jsx';
 import InteractiveBackground from './components/InteractiveBackground.jsx';
 
 const sections = ['hero', 'about', 'experience', 'skills', 'journey', 'contact'];
-const topCanvas = '#f3ead5';
-const bottomCanvas = '#111111';
+const canvasColors = {
+  student: { top: '#f3ead5', bottom: '#111111' },
+  nonStudent: { top: '#0b0e10', bottom: '#050607' },
+};
 
 export default function App() {
   const scrollContainerRef = useRef(null);
@@ -48,6 +50,12 @@ export default function App() {
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) return undefined;
+
+    const { top: topCanvas, bottom: bottomCanvas } = studentMode
+      ? canvasColors.student
+      : canvasColors.nonStudent;
+
+    document.documentElement.classList.toggle('is-non-student-theme', !studentMode);
 
     let frameId = 0;
     let activeCanvas = '';
@@ -105,11 +113,12 @@ export default function App() {
       window.removeEventListener('resize', scheduleUpdate);
       if (frameId) window.cancelAnimationFrame(frameId);
       document.documentElement.classList.remove('is-at-bottom');
+      document.documentElement.classList.remove('is-non-student-theme');
       document.documentElement.style.removeProperty('--overscroll-canvas');
       document.documentElement.style.removeProperty('background-color');
       document.body.style.removeProperty('background-color');
     };
-  }, []);
+  }, [studentMode]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -117,7 +126,7 @@ export default function App() {
 
   return (
     <div
-      className={`site-root relative overflow-x-hidden${studentMode ? '' : ' is-inverted'}`}
+      className={`site-root relative overflow-x-hidden${studentMode ? '' : ' is-non-student-mode'}`}
     >
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <Navbar
@@ -137,9 +146,9 @@ export default function App() {
           />
           <About studentMode={studentMode} />
           <Experience studentMode={studentMode} />
-          <Skills />
-          <Journey />
-          <Contact />
+          <Skills studentMode={studentMode} />
+          <Journey studentMode={studentMode} />
+          <Contact studentMode={studentMode} />
         </main>
         <Footer />
       </div>

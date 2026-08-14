@@ -1,22 +1,11 @@
 import { motion } from 'framer-motion';
-import { experiences } from '../data/projects.js';
-
-const groups = [
-  {
-    key: 'academic',
-    label: 'Academic Experience',
-    description: 'Coursework-driven exploration, technical learning, and applied computer science practice.',
-  },
-  {
-    key: 'non-academic',
-    label: 'Non-Academic Experience',
-    description: 'Independent experiments and community-focused builds developed beyond formal coursework.',
-  },
-];
+import {
+  experienceCategories,
+  nonStudentModeExperiences,
+  studentModeExperiences,
+} from '../data/experience.js';
 
 export default function Experience({ studentMode }) {
-  const orderedGroups = studentMode ? groups : [...groups].reverse();
-
   if (studentMode) {
     return (
       <section id="experience" className="section-shell section-projects">
@@ -37,7 +26,7 @@ export default function Experience({ studentMode }) {
           </div>
 
           <div className="project-grid">
-            {experiences.map((project, index) => (
+            {studentModeExperiences.map((project, index) => (
               <motion.article
                 key={project.name}
                 initial={{ opacity: 0, y: 48, rotate: index % 2 === 0 ? -2 : 2 }}
@@ -75,66 +64,96 @@ export default function Experience({ studentMode }) {
   }
 
   return (
-    <section id="experience" className="section-shell section-projects">
+    <section id="experience" className="section-shell section-projects is-non-student">
       <div className="portfolio-container">
         <div className="section-heading">
           <div className="sticker sticker-signal">Experience</div>
-          <h2>Learning in class, building beyond it.</h2>
+          <h2>Work done with people, not just tools.</h2>
           <p>
-            A collection of academic exploration and independent experience shaped
-            through practical projects, experiments, and continuous learning.
+            Selected academic and independent work, grouped by where it happened.
           </p>
         </div>
 
         <div className="experience-groups">
-          {orderedGroups.map((group, groupIndex) => {
-            const groupExperiences = experiences.filter((item) => item.category === group.key);
+          {experienceCategories.map((category, categoryIndex) => {
+            const categoryExperiences = nonStudentModeExperiences.filter(
+              (experience) => experience.category === category.key,
+            );
 
             return (
               <motion.div
-                className="experience-group"
-                key={`${group.key}-${studentMode}`}
-                layout
-                initial={{ opacity: 0, x: studentMode ? -28 : 28 }}
+                className={`experience-group experience-group-${category.key}`}
+                key={category.key}
+                initial={{ opacity: 0, x: 28 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  layout: { type: 'spring', stiffness: 260, damping: 28 },
-                  opacity: { duration: 0.3, delay: groupIndex * 0.08 },
-                  x: { duration: 0.42, delay: groupIndex * 0.08 },
+                  duration: 0.42,
+                  delay: categoryIndex * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
               >
                 <div className="experience-group-heading">
-                  <h3>{group.label}</h3>
-                  <p>{group.description}</p>
+                  <span className="experience-group-count">
+                    {String(categoryIndex + 1).padStart(2, '0')} /{' '}
+                    {String(categoryExperiences.length).padStart(2, '0')}
+                  </span>
+                  <h3>{category.label}</h3>
+                  <p>{category.description}</p>
                 </div>
                 <div className="project-grid">
-                  {groupExperiences.map((experience, index) => (
+                  {categoryExperiences.length === 0 && (
+                    <div className="experience-empty-state">
+                      <span>Coming soon</span>
+                      <p>{category.emptyMessage}</p>
+                    </div>
+                  )}
+                  {categoryExperiences.map((experience, index) => (
                     <motion.article
-                      key={experience.name}
-                      initial={{ opacity: 0, y: 48, rotate: index % 2 === 0 ? -2 : 2 }}
-                      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                      key={`${category.key}-${experience.name || index}`}
+                      initial={{ opacity: 0, y: 32 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-120px' }}
                       transition={{ duration: 0.65, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                      whileHover={{ y: -8, rotate: index % 2 === 0 ? 1 : -1 }}
+                      whileHover={{ y: -5 }}
                       className="project-card"
                     >
+                      <div className="experience-image-frame">
+                        {experience.image ? (
+                          <img
+                            src={experience.image}
+                            alt={experience.imageAlt || `Preview of ${experience.name}`}
+                            className="experience-image"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="experience-image-placeholder" aria-hidden="true">
+                            <span>Image</span>
+                            <strong>Add project image</strong>
+                          </div>
+                        )}
+                      </div>
                       <div className="project-topline">
                         <span>{experience.status}</span>
                         <span>#{String(index + 1).padStart(2, '0')}</span>
                       </div>
-                      <h3>{experience.name}</h3>
+                      <h3>{experience.name || 'Untitled Experience'}</h3>
                       <p>{experience.description}</p>
                       <div className="stack-list" aria-label={`${experience.name} skills and tools`}>
                         {experience.stack.map((tech) => <span key={tech}>{tech}</span>)}
                       </div>
                       <div className="project-links">
-                        <a href={experience.github} target="_blank" rel="noreferrer" data-cursor>
-                          GitHub
-                        </a>
+                        {experience.github && (
+                          <a href={experience.github} target="_blank" rel="noreferrer" data-cursor>
+                            GitHub
+                          </a>
+                        )}
                         {experience.demo && (
                           <a href={experience.demo} target="_blank" rel="noreferrer" data-cursor>
                             Live Demo
                           </a>
+                        )}
+                        {!experience.github && !experience.demo && (
+                          <span className="project-link-unavailable">Documentation coming soon</span>
                         )}
                       </div>
                     </motion.article>

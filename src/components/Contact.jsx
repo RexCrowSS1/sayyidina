@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { contactLinks } from '../data/contact.js';
 
-export default function Contact() {
+export default function Contact({ studentMode }) {
   return (
-    <section id="contact" className="section-shell section-contact">
+    <section
+      id="contact"
+      className={`section-shell section-contact${studentMode ? '' : ' is-non-student'}`}
+    >
       <div className="portfolio-container">
         <div className="contact-layout">
           <motion.div
@@ -14,16 +17,20 @@ export default function Contact() {
             className="section-intro"
           >
             <div className="sticker sticker-coral">Contact</div>
-            <h2>Have an idea, internship lead, or build challenge?</h2>
+            <h2>
+              {studentMode
+                ? 'Have an idea, internship lead, or build challenge?'
+                : 'Have a project or activity in mind?'}
+            </h2>
             <p>
-              I am open to learning opportunities, collaborations, and small product
-              experiments. Add the contact links when they are ready, and this section
-              will become the fastest path to reach me.
+              {studentMode
+                ? 'I am open to learning opportunities, collaborations, and small product experiments.'
+                : 'I am open to organization work, community projects, and creative collaborations.'}
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 36, rotate: 2 }}
+            initial={{ opacity: 0, y: 36, rotate: studentMode ? 2 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}

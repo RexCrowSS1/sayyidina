@@ -1,39 +1,25 @@
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import heroBackdrop from '../assets/anime-cyber-campus-clean.jpg';
 import profile from '../assets/myprofile.jpeg';
+import nonStudentProfile from '../assets/nonstudent-profile.jpg';
 
-const aboutContent = {
+const heroContent = {
   student: {
-    title: 'Curious by default, practical when it is time to learn.',
-    paragraphs: [
-      'I am learning how to organize and communicate with social and technical systems.',
-      'My current focus is building stronger frontend habits, understanding practical AI workflows, and improving how I present ideas through clean, confident interfaces.',
-    ],
-    label: 'Current learning interests',
-    interests: [
-      'Computer Science fundamentals',
-      'AI-assisted products',
-      'Fast and responsive web interfaces',
-      'Creative digital experiments',
-    ],
-    mindset: 'Student mindset',
-    cycle: 'learn / make / refine',
+    eyebrow: 'Personal Portfolio',
+    headline: 'Computer Science Student / AI & Web Developer Enthusiast',
+    description:
+      'I enjoy building sharp, practical web experiences where computer science, AI ideas, and expressive interfaces meet. The goal is simple: make digital projects feel useful, fast, and unmistakably personal.',
+    tags: ['React', 'AI Tools', 'Frontend', 'Creative Code'],
+    note: 'Focused on learning, building, and shipping small digital experiments with taste and discipline.',
   },
   nonstud: {
-    title: 'Trying all the things, building mindset what matters.',
-    paragraphs: [
-      'I joined couples of clubs and organizations to explore the intersection of different fields and create meaningful projects.',
-    ],
-    label: 'Current development focus',
-    interests: [
-      'Production robotics',
-      'Music and sound design',
-      'Responsive product experiences',
-      'Creative technical solutions',
-    ],
-    mindset: 'Social mindset',
-    cycle: 'plan / build / ship',
+    eyebrow: 'Beyond The Classroom',
+    headline: 'Collaborator / Creative Builder / Organization Enthusiast',
+    description:
+      'I grow through teamwork, organizations, and hands-on initiatives. I enjoy connecting people and ideas, taking responsibility, and turning shared goals into meaningful results.',
+    tags: ['Communication', 'Teamwork', 'Leadership', 'Adaptability'],
+    note: 'Focused on contributing with empathy, taking initiative, and growing through every collaboration.',
   },
 };
 
@@ -44,29 +30,46 @@ export default function Hero({
   studentMode,
   onToggleStudentMode,
 }) {
+  const content = studentMode ? heroContent.student : heroContent.nonstud;
   const sectionRef = useRef(null);
   const reduceMotion = useReducedMotion();
-  const content = studentMode ? aboutContent.student : aboutContent.nonstud;
   const { scrollYProgress } = useScroll({
     container: scrollContainerRef,
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
+  const rawBackgroundY = useTransform(scrollYProgress, [0, 1], [0, 96]);
+  const backgroundY = useSpring(rawBackgroundY, { stiffness: 42, damping: 24, mass: 0.8 });
   const starY = useTransform(scrollYProgress, [0, 1], [0, -44]);
   const cyberY = useTransform(scrollYProgress, [0, 1], [0, 68]);
   const ambientY = useTransform(scrollYProgress, [0, 1], [0, -34]);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 0.9, 0.72]);
   const lineOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [0.42, 0.34, 0.16]);
   const washOpacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 0.88, 0.72]);
   const profileY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const profileRotate = useTransform(scrollYProgress, [0, 1], [0, -4]);
+  const backdropGradient = studentMode
+    ? 'linear-gradient(90deg, rgba(247, 237, 211, 0.82) 0%, rgba(247, 237, 211, 0.46) 43%, rgba(8, 20, 31, 0.14) 100%)'
+    : 'linear-gradient(90deg, rgba(11, 14, 16, 0.97) 0%, rgba(11, 14, 16, 0.88) 46%, rgba(11, 14, 16, 0.58) 100%)';
 
   return (
     <section id="hero" ref={sectionRef} className="hero-section">
-      <div
+      <motion.div
         aria-hidden="true"
         className="hero-backdrop"
+        animate={
+          reduceMotion
+            ? undefined
+            : {
+                scale: [1.015, 1.035, 1.015],
+                x: [0, -10, 0],
+              }
+        }
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
         style={{
-          backgroundImage: `linear-gradient(90deg, rgba(247, 237, 211, 0.82) 0%, rgba(247, 237, 211, 0.46) 43%, rgba(8, 20, 31, 0.14) 100%), url(${heroBackdrop})`,
+          backgroundImage: `${backdropGradient}, url(${heroBackdrop})`,
+          y: reduceMotion ? 0 : backgroundY,
+          opacity: reduceMotion ? 1 : backgroundOpacity,
         }}
       />
       <motion.div
@@ -100,28 +103,17 @@ export default function Hero({
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="hero-copy"
         >
-          <motion.div
-            key={`sticker-${studentMode}`}
-            className="sticker sticker-signal"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            {studentMode ? 'Student Portfolio' : 'Builder Portfolio'}
-          </motion.div>
-          <motion.div
-            key={`hero-text-${studentMode}`}
-            className={`hero-mode-copy${studentMode ? ' is-student' : ''}`}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <div className="sticker sticker-signal">{content.eyebrow}</div>
+          <div>
             <h1 className="hero-title">
               Sayyidina
               <span>Anshari Ahmad</span>
             </h1>
-            <p className="hero-headline">{content.title}</p>
-            <p className="hero-description">{content.paragraphs.join(' ')}</p>
-          </motion.div>
+            <p className="hero-headline">
+              {content.headline}
+            </p>
+            <p className="hero-description">{content.description}</p>
+          </div>
 
           <div className="hero-actions">
             <motion.button
@@ -132,7 +124,7 @@ export default function Hero({
               className="btn-brutal"
               data-cursor
             >
-              {studentMode ? 'View Projects' : 'View Experience'}
+              View Experience
             </motion.button>
             <motion.button
               type="button"
@@ -146,26 +138,11 @@ export default function Hero({
             </motion.button>
           </div>
 
-          <motion.div
-            key={`hero-tags-${studentMode}`}
-            className="hero-tags"
-            aria-label="Focus areas"
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.055 } } }}
-          >
-            {content.interests.map((item) => (
-              <motion.span
-                key={item}
-                variants={{
-                  hidden: { opacity: 0, y: 8 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-              >
-                {item}
-              </motion.span>
+          <div className="hero-tags" aria-label="Focus areas">
+            {content.tags.map((item) => (
+              <span key={item}>{item}</span>
             ))}
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.aside
@@ -178,11 +155,30 @@ export default function Hero({
           }}
           className="profile-block"
         >
-          <div className="profile-frame">
-            <img
+          <div className={`profile-frame${studentMode ? '' : ' is-non-student'}`}>
+            <motion.img
               src={profile}
-              alt="Portrait of Sayyidina Anshari Ahmad"
-              className="profile-image"
+              alt={studentMode ? 'Portrait of Sayyidina Anshari Ahmad' : ''}
+              aria-hidden={!studentMode}
+              className="profile-image profile-image-student"
+              initial={false}
+              animate={{
+                opacity: studentMode ? 1 : 0,
+                scale: studentMode ? 1 : 1.035,
+              }}
+              transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <motion.img
+              src={nonStudentProfile}
+              alt={studentMode ? '' : 'Sayyidina Anshari Ahmad performing guitar on stage'}
+              aria-hidden={studentMode}
+              className="profile-image profile-image-non-student"
+              initial={false}
+              animate={{
+                opacity: studentMode ? 0 : 1,
+                scale: studentMode ? 1.035 : 1,
+              }}
+              transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
             />
           </div>
           <div className="profile-meta">
@@ -211,14 +207,7 @@ export default function Hero({
           </div>
           <div className="profile-note">
             <span className="profile-note-index">01</span>
-            <motion.p
-              key={`profile-note-${studentMode}`}
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {content.mindset}: {content.cycle}.
-            </motion.p>
+            <p>{content.note}</p>
           </div>
         </motion.aside>
       </div>
