@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [active, setActive] = useState(false);
   const [enabled, setEnabled] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const cursorRef = useRef(null);
+  const frameRef = useRef(0);
+  const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canUseCursor =
@@ -14,18 +14,33 @@ export default function CustomCursor() {
     setEnabled(canUseCursor);
     if (!canUseCursor) return undefined;
 
+    const renderPosition = () => {
+      frameRef.current = 0;
+      const cursor = cursorRef.current;
+      if (!cursor) return;
+
+      const { x, y } = positionRef.current;
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    };
+
     const move = (event) => {
-      setVisible(true);
-      setPosition({ x: event.clientX, y: event.clientY });
+      positionRef.current = { x: event.clientX, y: event.clientY };
+      cursorRef.current?.classList.add('visible');
+
+      if (!frameRef.current) {
+        frameRef.current = window.requestAnimationFrame(renderPosition);
+      }
     };
 
     const over = (event) => {
-      setActive(Boolean(event.target.closest('a, button, [data-cursor]')));
+      cursorRef.current?.classList.toggle(
+        'active',
+        Boolean(event.target.closest('a, button, [data-cursor]')),
+      );
     };
 
     const hide = () => {
-      setVisible(false);
-      setActive(false);
+      cursorRef.current?.classList.remove('visible', 'active');
     };
 
     const handleMouseOut = (event) => {
@@ -46,6 +61,7 @@ export default function CustomCursor() {
       window.removeEventListener('blur', hide);
       document.documentElement.removeEventListener('mouseenter', move);
       document.documentElement.removeEventListener('mouseleave', hide);
+      if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
@@ -53,11 +69,9 @@ export default function CustomCursor() {
 
   return (
     <div
+      ref={cursorRef}
       aria-hidden="true"
-      className={`custom-cursor ${active ? 'active' : ''} ${visible ? 'visible' : ''}`}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
-      }}
+      className="custom-cursor"
     />
   );
 }

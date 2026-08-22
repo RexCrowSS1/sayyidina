@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import {
-  motion,
+  m,
   useMotionValue,
   useReducedMotion,
   useSpring,
@@ -22,8 +22,8 @@ export default function InteractiveBackground() {
   const blockAY = useTransform(smoothY, [-1, 1], [-30, 30]);
   const blockBX = useTransform(smoothX, [-1, 1], [34, -34]);
   const blockBY = useTransform(smoothY, [-1, 1], [26, -26]);
-  const scanX = useTransform(smoothX, [-1, 1], ['18%', '82%']);
-  const scanY = useTransform(smoothY, [-1, 1], ['18%', '76%']);
+  const scanX = useTransform(smoothX, [-1, 1], ['calc(18vw - 50%)', 'calc(82vw - 50%)']);
+  const scanY = useTransform(smoothY, [-1, 1], ['calc(18vh - 50%)', 'calc(76vh - 50%)']);
 
   useEffect(() => {
     if (reduceMotion) return undefined;
@@ -41,7 +41,7 @@ export default function InteractiveBackground() {
       pointerY.set(0);
     };
 
-    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', resetPointer);
 
     return () => {
@@ -52,14 +52,15 @@ export default function InteractiveBackground() {
 
   return (
     <div className="interactive-background" aria-hidden="true">
-      <motion.div
+      <m.div
         className="interactive-scan"
         style={{
-          left: reduceMotion ? '50%' : scanX,
-          top: reduceMotion ? '48%' : scanY,
+          x: reduceMotion ? 'calc(50vw - 50%)' : scanX,
+          y: reduceMotion ? 'calc(48vh - 50%)' : scanY,
+          rotate: 12,
         }}
       />
-      <motion.div
+      <m.div
         className="interactive-scene"
         style={{
           x: reduceMotion ? 0 : sceneX,
@@ -70,12 +71,12 @@ export default function InteractiveBackground() {
       >
         <div className="interactive-plane interactive-plane-back" />
         <div className="interactive-plane interactive-plane-floor" />
-        <motion.div className="interactive-block block-a" style={{ x: blockAX, y: blockAY }} />
-        <motion.div className="interactive-block block-b" style={{ x: blockBX, y: blockBY }} />
-        <motion.div className="interactive-block block-c" style={{ x: blockBX, y: blockAY }} />
+        <m.div className="interactive-block block-a" style={{ x: blockAX, y: blockAY }} />
+        <m.div className="interactive-block block-b" style={{ x: blockBX, y: blockBY }} />
+        <m.div className="interactive-block block-c" style={{ x: blockBX, y: blockAY }} />
         <div className="interactive-line line-a" />
         <div className="interactive-line line-b" />
-      </motion.div>
+      </m.div>
     </div>
   );
 }

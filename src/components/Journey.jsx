@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { achievementItems, journeyItems } from '../data/journey.js';
 
 export default function Journey({ studentMode }) {
@@ -24,7 +24,7 @@ export default function Journey({ studentMode }) {
 
         <div className="timeline">
           {items.map((item, index) => (
-            <motion.div
+            <m.div
               key={item.marker}
               initial={studentMode
                 ? { opacity: 0, x: index % 2 === 0 ? -42 : 42, rotateY: index % 2 === 0 ? -8 : 8 }
@@ -41,7 +41,7 @@ export default function Journey({ studentMode }) {
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

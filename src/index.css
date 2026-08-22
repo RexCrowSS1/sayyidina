@@ -30,7 +30,7 @@
     --overscroll-top: #f3ead5;
     --overscroll-bottom: #111111;
     --overscroll-canvas: var(--overscroll-top);
-    --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.88) 0%, rgba(247, 237, 211, 0.58) 42%, rgba(8, 20, 31, 0.2) 100%), url("./assets/anime-cyber-campus-clean.jpg");
+    --hero-canvas-image: linear-gradient(90deg, rgba(247, 237, 211, 0.88) 0%, rgba(247, 237, 211, 0.58) 42%, rgba(8, 20, 31, 0.2) 100%), url("./assets/anime-cyber-campus-clean.avif");
   }
 
   html {
@@ -121,7 +121,6 @@
     radial-gradient(circle at 86% 34%, rgba(255, 91, 63, 0.1), transparent 22rem),
     var(--paper);
   background-size: 38px 38px, 38px 38px, auto, auto, auto;
-  filter: invert(0);
 }
 
 .site-root.is-non-student-mode {
@@ -142,7 +141,7 @@
   --shadow-soft: rgba(0, 0, 0, 0.5);
   --overscroll-top: #0b0e10;
   --overscroll-bottom: #050607;
-  --hero-canvas-image: linear-gradient(90deg, rgba(11, 14, 16, 0.97) 0%, rgba(11, 14, 16, 0.86) 48%, rgba(11, 14, 16, 0.62) 100%), url("./assets/anime-cyber-campus-clean.jpg");
+  --hero-canvas-image: linear-gradient(90deg, rgba(11, 14, 16, 0.97) 0%, rgba(11, 14, 16, 0.86) 48%, rgba(11, 14, 16, 0.62) 100%), url("./assets/anime-cyber-campus-clean.avif");
   --color-ink: #f4f1e8;
   --color-paper: #0b0e10;
   --color-cream: #111719;
@@ -254,6 +253,7 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .interactive-scan {
   position: absolute;
+  inset: 0 auto auto 0;
   width: clamp(140px, 20vw, 280px);
   height: clamp(140px, 20vw, 280px);
   border: 3px solid rgba(17, 17, 17, 0.32);
@@ -263,8 +263,8 @@ html.is-at-bottom .app-scroll-shell::after {
     repeating-linear-gradient(0deg, transparent 0 12px, rgba(17, 17, 17, 0.08) 12px 15px);
   box-shadow: 12px 12px 0 rgba(17, 17, 17, 0.1);
   opacity: 0.42;
-  transform: translate(-50%, -50%) rotate(12deg);
   transition: opacity 160ms ease;
+  will-change: transform;
 }
 
 .interactive-scene {
@@ -1053,6 +1053,12 @@ html.is-at-bottom .app-scroll-shell::after {
   @apply grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.8rem, 2vw, 1rem);
+}
+
+.project-view-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
 }
 
 .experience-groups {

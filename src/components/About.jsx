@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const aboutContent = {
   student: {
@@ -45,7 +45,7 @@ export default function About({ studentMode }) {
     >
       <div className="portfolio-container">
         <div className="section-grid">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 36, rotateX: studentMode ? 6 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
@@ -53,24 +53,24 @@ export default function About({ studentMode }) {
             className="section-intro"
           >
             <div className="sticker sticker-coral">About Me</div>
-            <motion.h2 key={`title-${studentMode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <m.h2 key={`title-${studentMode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {content.title}
-            </motion.h2>
+            </m.h2>
             <div className="about-paragraphs">
               {content.paragraphs.map((paragraph, index) => (
-                <motion.p
+                <m.p
                   key={`${studentMode}-${index}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.06 }}
                 >
                   {paragraph}
-                </motion.p>
+                </m.p>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 42, rotate: studentMode ? -2 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
@@ -93,7 +93,7 @@ export default function About({ studentMode }) {
               <span>{content.mindset}</span>
               <strong>{content.cycle}</strong>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

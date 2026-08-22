@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { contactLinks } from '../data/contact.js';
 
 export default function Contact({ studentMode }) {
@@ -9,7 +9,7 @@ export default function Contact({ studentMode }) {
     >
       <div className="portfolio-container">
         <div className="contact-layout">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
@@ -27,9 +27,9 @@ export default function Contact({ studentMode }) {
                 ? 'I am open to learning opportunities, collaborations, and small product experiments.'
                 : 'I am open to organization work, community projects, and creative collaborations.'}
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 36, rotate: studentMode ? 2 : 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
@@ -56,7 +56,7 @@ export default function Contact({ studentMode }) {
                 </div>
               )
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

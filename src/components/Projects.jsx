@@ -1,15 +1,25 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { m } from 'framer-motion';
 import {
   experienceCategories,
   nonStudentModeExperiences,
   studentModeExperiences,
 } from '../data/experience.js';
 
+const projectPreviewLimit = 9;
+
 export default function Experience({ studentMode }) {
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
   if (studentMode) {
+    const hasMoreProjects = studentModeExperiences.length > projectPreviewLimit;
+    const visibleProjects = showAllProjects
+      ? studentModeExperiences
+      : studentModeExperiences.slice(0, projectPreviewLimit);
+
     return (
       <section id="experience" className="section-shell section-projects">
-        <motion.div
+        <m.div
           key="student-projects"
           className="portfolio-container"
           initial={{ opacity: 0, y: 24 }}
@@ -25,9 +35,9 @@ export default function Experience({ studentMode }) {
             </p>
           </div>
 
-          <div className="project-grid">
-            {studentModeExperiences.map((project, index) => (
-              <motion.article
+          <div id="student-project-grid" className="project-grid">
+            {visibleProjects.map((project, index) => (
+              <m.article
                 key={project.name}
                 initial={{ opacity: 0, y: 48, rotate: index % 2 === 0 ? -2 : 2 }}
                 whileInView={{ opacity: 1, y: 0, rotate: 0 }}
@@ -55,10 +65,27 @@ export default function Experience({ studentMode }) {
                     </a>
                   )}
                 </div>
-              </motion.article>
+              </m.article>
             ))}
           </div>
-        </motion.div>
+
+          {hasMoreProjects && (
+            <div className="project-view-actions">
+              <m.button
+                type="button"
+                className="btn-brutal"
+                aria-expanded={showAllProjects}
+                aria-controls="student-project-grid"
+                onClick={() => setShowAllProjects((isExpanded) => !isExpanded)}
+                whileHover={{ x: 4, y: -4 }}
+                whileTap={{ scale: 0.97 }}
+                data-cursor
+              >
+                {showAllProjects ? 'Show less' : 'View all'}
+              </m.button>
+            </div>
+          )}
+        </m.div>
       </section>
     );
   }
@@ -81,7 +108,7 @@ export default function Experience({ studentMode }) {
             );
 
             return (
-              <motion.div
+              <m.div
                 className={`experience-group experience-group-${category.key}`}
                 key={category.key}
                 initial={{ opacity: 0, x: 28 }}
@@ -108,7 +135,7 @@ export default function Experience({ studentMode }) {
                     </div>
                   )}
                   {categoryExperiences.map((experience, index) => (
-                    <motion.article
+                    <m.article
                       key={`${category.key}-${experience.name || index}`}
                       initial={{ opacity: 0, y: 32 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -124,6 +151,7 @@ export default function Experience({ studentMode }) {
                             alt={experience.imageAlt || `Preview of ${experience.name}`}
                             className="experience-image"
                             loading="lazy"
+                            decoding="async"
                           />
                         ) : (
                           <div className="experience-image-placeholder" aria-hidden="true">
@@ -156,10 +184,10 @@ export default function Experience({ studentMode }) {
                           <span className="project-link-unavailable">Documentation coming soon</span>
                         )}
                       </div>
-                    </motion.article>
+                    </m.article>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

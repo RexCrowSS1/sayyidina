@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import heroBackdrop from '../assets/anime-cyber-campus-clean.jpg';
-import profile from '../assets/myprofile.jpeg';
-import nonStudentProfile from '../assets/nonstudent-profile.jpg';
+import { m, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import heroBackdrop from '../assets/anime-cyber-campus-clean.avif';
+import profile from '../assets/myprofile.avif';
+import nonStudentProfile from '../assets/nonstudent-profile.avif';
 
 const heroContent = {
   student: {
@@ -54,7 +54,7 @@ export default function Hero({
 
   return (
     <section id="hero" ref={sectionRef} className="hero-section">
-      <motion.div
+      <m.div
         aria-hidden="true"
         className="hero-backdrop"
         animate={
@@ -72,24 +72,24 @@ export default function Hero({
           opacity: reduceMotion ? 1 : backgroundOpacity,
         }}
       />
-      <motion.div
+      <m.div
         className="hero-starfield"
         aria-hidden="true"
         style={{ y: reduceMotion ? 0 : starY }}
       />
-      <motion.div
+      <m.div
         className="hero-cyber-lines"
         aria-hidden="true"
         style={{ y: reduceMotion ? 0 : cyberY, opacity: reduceMotion ? undefined : lineOpacity }}
       />
-      <motion.div
+      <m.div
         aria-hidden="true"
         className="hero-ambient"
         animate={reduceMotion ? undefined : { opacity: [0.34, 0.58, 0.34], scale: [1, 1.08, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         style={{ y: reduceMotion ? 0 : ambientY }}
       />
-      <motion.div
+      <m.div
         className="hero-softwash"
         aria-hidden="true"
         style={{ opacity: reduceMotion ? 1 : washOpacity }}
@@ -97,7 +97,7 @@ export default function Hero({
       <div className="hero-halftone" aria-hidden="true" />
 
       <div className="portfolio-container hero-grid">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 34 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -116,7 +116,7 @@ export default function Hero({
           </div>
 
           <div className="hero-actions">
-            <motion.button
+            <m.button
               type="button"
               whileHover={{ x: 4, y: -4 }}
               whileTap={{ scale: 0.97 }}
@@ -125,8 +125,8 @@ export default function Hero({
               data-cursor
             >
               View Experience
-            </motion.button>
-            <motion.button
+            </m.button>
+            <m.button
               type="button"
               whileHover={{ x: 4, y: -4 }}
               whileTap={{ scale: 0.97 }}
@@ -135,7 +135,7 @@ export default function Hero({
               data-cursor
             >
               Contact Me
-            </motion.button>
+            </m.button>
           </div>
 
           <div className="hero-tags" aria-label="Focus areas">
@@ -143,9 +143,9 @@ export default function Hero({
               <span key={item}>{item}</span>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.aside
+        <m.aside
           initial={{ opacity: 0, rotate: 3, y: 36 }}
           animate={{ opacity: 1, rotate: 0, y: 0 }}
           transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -156,11 +156,12 @@ export default function Hero({
           className="profile-block"
         >
           <div className={`profile-frame${studentMode ? '' : ' is-non-student'}`}>
-            <motion.img
+            <m.img
               src={profile}
               alt={studentMode ? 'Portrait of Sayyidina Anshari Ahmad' : ''}
               aria-hidden={!studentMode}
               className="profile-image profile-image-student"
+              decoding="async"
               initial={false}
               animate={{
                 opacity: studentMode ? 1 : 0,
@@ -168,11 +169,12 @@ export default function Hero({
               }}
               transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
             />
-            <motion.img
+            <m.img
               src={nonStudentProfile}
               alt={studentMode ? '' : 'Sayyidina Anshari Ahmad performing guitar on stage'}
               aria-hidden={studentMode}
               className="profile-image profile-image-non-student"
+              decoding="async"
               initial={false}
               animate={{
                 opacity: studentMode ? 0 : 1,
@@ -183,7 +185,7 @@ export default function Hero({
           </div>
           <div className="profile-meta">
             <span>Based in Indonesia</span>
-            <motion.button
+            <m.button
               type="button"
               className={`student-mode-toggle${studentMode ? ' is-on' : ''}`}
               onClick={onToggleStudentMode}
@@ -196,20 +198,20 @@ export default function Hero({
             >
               <span className="student-mode-label">Student mode</span>
               <span className="student-mode-switch" aria-hidden="true">
-                <motion.span
+                <m.span
                   className="student-mode-knob"
                   animate={{ x: studentMode ? 24 : 0 }}
                   transition={{ type: 'spring', stiffness: 520, damping: 30 }}
                 />
               </span>
               <span className="student-mode-state">{studentMode ? 'ON' : 'OFF'}</span>
-            </motion.button>
+            </m.button>
           </div>
           <div className="profile-note">
             <span className="profile-note-index">01</span>
             <p>{content.note}</p>
           </div>
-        </motion.aside>
+        </m.aside>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { domAnimation, LazyMotion, m, useScroll, useSpring } from 'framer-motion';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
@@ -125,34 +125,36 @@ export default function App() {
   };
 
   return (
-    <div
-      className={`site-root relative overflow-x-hidden${studentMode ? '' : ' is-non-student-mode'}`}
-    >
-      <motion.div className="scroll-progress" style={{ scaleX }} />
-      <Navbar
-        activeSection={activeSection}
-        onNavigate={scrollTo}
-        studentMode={studentMode}
-      />
-      <div ref={scrollContainerRef} className="app-scroll-shell">
-        <InteractiveBackground />
-        <main id="content" className="site-content relative z-10">
-          <Hero
-            scrollContainerRef={scrollContainerRef}
-            onContact={() => scrollTo('contact')}
-            onExperience={() => scrollTo('experience')}
-            studentMode={studentMode}
-            onToggleStudentMode={() => setStudentMode((isOn) => !isOn)}
-          />
-          <About studentMode={studentMode} />
-          <Experience studentMode={studentMode} />
-          <Skills studentMode={studentMode} />
-          <Journey studentMode={studentMode} />
-          <Contact studentMode={studentMode} />
-        </main>
-        <Footer />
+    <LazyMotion features={domAnimation} strict>
+      <div
+        className={`site-root relative overflow-x-hidden${studentMode ? '' : ' is-non-student-mode'}`}
+      >
+        <m.div className="scroll-progress" style={{ scaleX }} />
+        <Navbar
+          activeSection={activeSection}
+          onNavigate={scrollTo}
+          studentMode={studentMode}
+        />
+        <div ref={scrollContainerRef} className="app-scroll-shell">
+          <InteractiveBackground />
+          <main id="content" className="site-content relative z-10">
+            <Hero
+              scrollContainerRef={scrollContainerRef}
+              onContact={() => scrollTo('contact')}
+              onExperience={() => scrollTo('experience')}
+              studentMode={studentMode}
+              onToggleStudentMode={() => setStudentMode((isOn) => !isOn)}
+            />
+            <About studentMode={studentMode} />
+            <Experience studentMode={studentMode} />
+            <Skills studentMode={studentMode} />
+            <Journey studentMode={studentMode} />
+            <Contact studentMode={studentMode} />
+          </main>
+          <Footer />
+        </div>
+        <CustomCursor />
       </div>
-      <CustomCursor />
-    </div>
+    </LazyMotion>
   );
 }

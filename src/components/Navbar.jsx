@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const items = [
   { label: 'Home', target: 'hero' },
@@ -11,7 +11,7 @@ const items = [
 
 export default function Navbar({ activeSection, onNavigate, studentMode }) {
   return (
-    <motion.header
+    <m.header
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -40,22 +40,22 @@ export default function Navbar({ activeSection, onNavigate, studentMode }) {
             </button>
           ))}
         </nav>
-        <motion.div
+        <m.div
           className={`nav-status${studentMode ? '' : ' is-non-academic'}`}
           aria-label="Current focus"
           animate={{ y: [0, -3, 0], rotate: studentMode ? 0 : -1 }}
           transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.span
+          <m.span
             key={studentMode ? 'student' : 'builder'}
             initial={{ opacity: 0, y: 7 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.24 }}
           >
             {studentMode ? 'Student / CS / AI' : 'People / Growth / Impact'}
-          </motion.span>
-        </motion.div>
+          </m.span>
+        </m.div>
       </div>
-    </motion.header>
+    </m.header>
   );
 }

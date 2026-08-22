@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { nonStudentSkillCategories, studentSkillCategories } from '../data/skills.js';
 
 export default function Skills({ studentMode }) {
@@ -28,7 +28,7 @@ export default function Skills({ studentMode }) {
 
         <div className={`skills-grid${studentMode ? '' : ' is-soft-skills'}`}>
           {categories.map((category, index) => (
-            <motion.div
+            <m.div
               key={category.title}
               initial={{
                 opacity: 0,
@@ -46,12 +46,12 @@ export default function Skills({ studentMode }) {
               <h3>{category.title}</h3>
               <div className="skill-badge-list">
                 {category.items.map((skill) => (
-                  <motion.span key={skill} whileHover={{ x: 4, y: -3 }} className="skill-badge">
+                  <m.span key={skill} whileHover={{ x: 4, y: -3 }} className="skill-badge">
                     {skill}
-                  </motion.span>
+                  </m.span>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
