@@ -104,7 +104,7 @@ export const studentModeExperiences = [
       'A local-first AI companion with intent and mood detection, persistent conversation memory, a FastAPI/PostgreSQL backend, and optional Ollama-powered replies.',
     stack: ['FastAPI', 'React', 'PostgreSQL', 'Ollama'],
     github: 'https://github.com/RexCrowSS1/AICompanion',
-    demo: 'https://ai-companion-three-lac.vercel.app',
+    demo: 'https://eclpsassist.vercel.app/',
     category: 'academic',
     status: 'Live AI App',
   },
