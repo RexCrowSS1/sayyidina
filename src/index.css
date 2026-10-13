@@ -441,105 +441,26 @@ html.is-at-bottom .app-scroll-shell::after {
   min-height: 100svh;
   padding: clamp(7.5rem, 13vw, 10rem) 0 clamp(4rem, 8vw, 7rem);
   overflow: hidden;
-  perspective: 1000px;
   background-color: var(--paper);
+  background-image: var(--hero-canvas-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  contain: paint;
 }
 
 .hero-section::before {
-  content: none;
-}
-
-.hero-backdrop {
-  @apply absolute inset-0 z-[-5] bg-cover bg-center;
-  z-index: -5;
-  background-color: var(--paper);
-  filter: saturate(0.96) contrast(0.98);
-}
-
-.hero-starfield {
-  @apply pointer-events-none absolute z-[-4];
-  inset: -8% -4%;
-  z-index: -4;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background:
-    radial-gradient(circle, rgba(255, 248, 232, 0.72) 0 1px, transparent 1.5px) 78% 12% / 160px 120px,
-    radial-gradient(circle, rgba(18, 191, 205, 0.44) 0 1px, transparent 1.5px) 84% 28% / 220px 160px,
-    radial-gradient(circle, rgba(255, 211, 38, 0.36) 0 1px, transparent 1.5px) 68% 18% / 190px 150px;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.85) 100%);
-  opacity: 0.36;
-  animation: star-drift 32s linear infinite;
-  will-change: background-position, opacity;
-}
-
-.hero-cyber-lines {
-  @apply pointer-events-none absolute inset-0 z-[-4];
-  background:
-    linear-gradient(100deg, transparent 0 58%, rgba(18, 191, 205, 0.28) 61%, transparent 64%),
-    linear-gradient(98deg, transparent 0 72%, rgba(255, 91, 63, 0.28) 74%, transparent 77%),
-    linear-gradient(180deg, transparent 0 68%, rgba(255, 211, 38, 0.18) 70%, transparent 72%);
-  background-size: 120% 100%, 130% 100%, 100% 120%;
-  filter: blur(0.4px);
-  opacity: 0.42;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 46%, rgba(0, 0, 0, 0.75) 100%);
-  animation: cyber-line-drift 14s ease-in-out infinite alternate;
-  will-change: background-position, opacity;
-}
-
-.hero-ambient {
-  @apply pointer-events-none absolute z-[-4];
-  inset: -18% -12%;
-  z-index: -4;
-  background:
-    radial-gradient(circle at 68% 20%, rgba(18, 191, 205, 0.2), transparent 25%),
-    radial-gradient(circle at 88% 70%, rgba(255, 91, 63, 0.16), transparent 24%),
-    radial-gradient(circle at 38% 52%, rgba(255, 211, 38, 0.08), transparent 30%);
-  filter: blur(42px);
-  mix-blend-mode: soft-light;
-  transform: translateZ(0);
-  will-change: opacity, transform;
-}
-
-.hero-softwash {
-  @apply pointer-events-none absolute inset-0 z-[-3];
-  background:
-    linear-gradient(90deg, rgba(243, 234, 213, 0.34) 0%, rgba(243, 234, 213, 0.16) 46%, rgba(243, 234, 213, 0.02) 100%),
-    linear-gradient(180deg, rgba(243, 234, 213, 0) 0%, rgba(243, 234, 213, 0.24) 82%, var(--paper) 100%);
-}
-
-.hero-halftone {
-  @apply pointer-events-none absolute inset-0 z-[-2] opacity-[0.22] mix-blend-multiply;
-  background:
-    radial-gradient(circle, rgba(17, 17, 17, 0.035) 1px, transparent 1px) 0 0 / 30px 30px,
+    radial-gradient(circle, rgba(17, 17, 17, 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(circle at 72% 20%, rgba(18, 191, 205, 0.12), transparent 28%),
     linear-gradient(180deg, rgba(243, 234, 213, 0.01) 0%, rgba(243, 234, 213, 0.18) 84%, var(--paper) 100%);
 }
 
-}
-
-@keyframes star-drift {
-  0% {
-    background-position: 78% 12%, 84% 28%, 68% 18%;
-    opacity: 0.28;
-  }
-
-  50% {
-    opacity: 0.42;
-  }
-
-  100% {
-    background-position: 82% 9%, 80% 33%, 72% 14%;
-    opacity: 0.28;
-  }
-}
-
-@keyframes cyber-line-drift {
-  0% {
-    background-position: 0 0, 0 0, 0 0;
-    opacity: 0.32;
-  }
-
-  100% {
-    background-position: 8% 0, -7% 0, 0 8%;
-    opacity: 0.5;
-  }
 }
 
 @keyframes dark-scan-pulse {
@@ -558,6 +479,8 @@ html.is-at-bottom .app-scroll-shell::after {
 @layer components {
 .hero-grid {
   @apply grid items-center;
+  position: relative;
+  z-index: 1;
   grid-template-columns: minmax(0, 1.1fr) minmax(290px, 0.58fr);
   gap: clamp(2rem, 5vw, 4.8rem);
 }
@@ -765,7 +688,6 @@ html.is-at-bottom .app-scroll-shell::after {
 
 .profile-image {
   @apply absolute inset-0 block size-full object-cover;
-  will-change: opacity, transform;
 }
 
 .profile-image-student {
@@ -885,8 +807,14 @@ html.is-at-bottom .app-scroll-shell::after {
   border-radius: 999px;
   background: var(--cream);
   box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.student-mode-toggle.is-on .student-mode-knob {
+  transform: translateX(24px);
+}
+
+.btn-brutal:focus-visible,
 .student-mode-toggle:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 4px;
@@ -1763,22 +1691,11 @@ html.is-at-bottom .app-scroll-shell::after {
   background-color: var(--night);
 }
 
-.site-root.is-non-student-mode .hero-backdrop {
-  filter: saturate(0.78) contrast(1.08) brightness(0.9);
-}
-
-.site-root.is-non-student-mode .hero-softwash {
+.site-root.is-non-student-mode .hero-section::before {
   background:
-    linear-gradient(90deg, rgba(11, 14, 16, 0.3) 0%, rgba(11, 14, 16, 0.12) 48%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, rgba(11, 14, 16, 0.68) 84%, var(--paper) 100%);
-}
-
-.site-root.is-non-student-mode .hero-halftone {
-  background:
-    radial-gradient(circle, rgba(244, 241, 232, 0.08) 1px, transparent 1px) 0 0 / 30px 30px,
+    radial-gradient(circle, rgba(244, 241, 232, 0.07) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(circle at 72% 20%, rgba(57, 206, 209, 0.1), transparent 28%),
     linear-gradient(180deg, transparent 0%, rgba(11, 14, 16, 0.2) 84%, var(--paper) 100%);
-  mix-blend-mode: screen;
-  opacity: 0.28;
 }
 
 .site-root.is-non-student-mode .hero-description {
@@ -2128,16 +2045,6 @@ html.is-at-bottom .app-scroll-shell::after {
 }
 
 @media (max-width: 620px) {
-  .hero-starfield,
-  .hero-cyber-lines {
-    opacity: 0.22;
-  }
-
-  .hero-ambient {
-    opacity: 0.42;
-    filter: blur(24px);
-  }
-
   .interactive-background {
     opacity: 0.44;
   }

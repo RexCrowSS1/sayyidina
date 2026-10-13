@@ -139,7 +139,6 @@ export default function App() {
           <InteractiveBackground />
           <main id="content" className="site-content relative z-10">
             <Hero
-              scrollContainerRef={scrollContainerRef}
               onContact={() => scrollTo('contact')}
               onExperience={() => scrollTo('experience')}
               studentMode={studentMode}
